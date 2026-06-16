@@ -1,0 +1,163 @@
+/* ============================================================
+   Stackly Global — Auth Pages Styling
+   ============================================================ */
+
+.auth-page {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  min-height: 100vh;
+  background: #090D16;
+}
+
+/* ── Left Branding Panel ── */
+.auth-panel {
+  background: radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.3) 0%, transparent 60%),
+              radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.25) 0%, transparent 65%),
+              linear-gradient(180deg, rgba(11, 16, 29, 0.75) 0%, rgba(11, 16, 29, 0.7) 100%),
+              url('../images/education_hero.webp') center/cover no-repeat;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px;
+  overflow: hidden;
+}
+
+.auth-panel::after {
+  content: ''; position: absolute; bottom: -150px; right: -150px;
+  width: 450px; height: 450px; border-radius: 50%;
+  background: rgba(255, 107, 74, 0.02); filter: blur(80px);
+  pointer-events: none;
+}
+
+.panel-dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.panel-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 10;
+}
+.panel-logo img { height: 110px; width: auto; object-fit: contain; border-radius: 50%; filter: hue-rotate(150deg) saturate(1.5); }
+.panel-logo-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.4rem; font-weight: 800; color: #fff;
+  letter-spacing: 0.5px;
+}
+.panel-logo-text span { color: #F97316; }
+
+.panel-logo-sub {
+  font-size: 0.7rem; font-weight: 600; color: #64748B;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  display: block; margin-top: 2px;
+}
+
+.panel-tagline {
+  font-family: 'Sora', sans-serif;
+  font-size: 2.4rem; font-weight: 950; line-height: 1.25;
+  margin-bottom: 20px; color: #fff; position: relative; z-index: 10;
+}
+.panel-tagline span {
+  background: linear-gradient(135deg, #F97316, #06B6D4);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.panel-desc {
+  font-size: 1rem; color: #94A3B8; line-height: 1.8;
+  margin-bottom: 48px; max-width: 420px; position: relative; z-index: 10;
+}
+
+.panel-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-bottom: 48px; position: relative; z-index: 10;
+}
+
+.panel-stat {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px; padding: 20px 15px; text-align: center;
+  backdrop-filter: blur(8px); transition: all 0.3s;
+}
+.panel-stat:hover {
+  background: rgba(249, 115, 22, 0.05);
+  border-color: rgba(249, 115, 22, 0.2);
+  transform: translateY(-3px);
+}
+.panel-stat-num {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.45rem; font-weight: 800; display: block; color: #fff;
+}
+.panel-stat-label {
+  font-size: 0.72rem; color: #94A3B8; text-transform: uppercase;
+  letter-spacing: 1px; margin-top: 6px; display: block;
+}
+
+.panel-testimonial {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 18px; padding: 24px; backdrop-filter: blur(10px);
+  position: relative; z-index: 10; max-width: 480px;
+}
+.panel-testimonial p { font-style: italic; font-size: 0.93rem; color: #CBD5E1; line-height: 1.7; margin-bottom: 12px; }
+.panel-testimonial-author { font-size: 0.8rem; font-weight: 700; color: #F97316; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── Right Auth Form Panel ── */
+.auth-form-panel {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px clamp(40px, 8vw, 80px); background: #090D16;
+  position: relative;
+}
+.auth-form-container { width: 100%; max-width: 420px; margin: 0 auto; }
+.auth-header { margin-bottom: 36px; }
+.auth-header h2 { font-family: 'Sora', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
+.auth-header p { color: #94A3B8; font-size: 0.95rem; }
+.auth-header p a { color: #F97316; font-weight: 600; }
+.auth-header p a:hover { text-decoration: underline; }
+
+.auth-form { display: flex; flex-direction: column; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-label { font-size: 0.82rem; font-weight: 700; color: #E2E8F0; text-transform: uppercase; letter-spacing: 1px; }
+
+.form-input-group { position: relative; display: flex; align-items: center; }
+.form-input-group i { position: absolute; left: 16px; color: #64748B; font-size: 0.95rem; }
+.form-input-group .form-input { padding-left: 46px; }
+
+.form-options { display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; color: #94A3B8; }
+.remember-me { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.remember-me input {
+  accent-color: #F97316; width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent; cursor: pointer;
+}
+.forgot-link { color: #F97316; font-weight: 600; }
+.forgot-link:hover { text-decoration: underline; }
+
+.social-login { margin-top: 32px; text-align: center; }
+.social-divider {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  color: #64748B; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.social-divider::before, .social-divider::after { content: ''; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.08); }
+.social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.social-btn {
+  border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px; padding: 12px; color: #fff; font-size: 0.88rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.25s;
+}
+.social-btn:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+
+/* ── Mobile Layout Adjustments ── */
+@media(max-width: 1024px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-panel { display: none; }
+  .auth-form-panel { padding: 100px 24px; }
+}
