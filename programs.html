@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Explore Stackly Global's active humanitarian programs — digital schooling, pediatric care, clean water stations, and nutrition hubs."/>
+  <title>Our Programs — Stackly Global</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/programs.css"/>
+
+  <style>
+    /* ══════════════════════════════════════════════
+       PROGRAMS PAGE — PREMIUM STYLES
+       ══════════════════════════════════════════════ */
+
+    /* ── HERO ── */
+    .prog-hero {
+      position: relative;
+      padding: clamp(120px, 18vw, 180px) 0 clamp(70px, 10vw, 110px);
+      text-align: center;
+      overflow: hidden;
+    }
+    .prog-hero-bg {
+      position: absolute; inset: 0;
+      background: url('images/education_hero.webp') center/cover no-repeat;
+      opacity: 0.10; filter: blur(3px); transform: scale(1.05);
+    }
+    .prog-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(9,13,22,0.55) 0%, var(--bg) 100%),
+                  radial-gradient(ellipse 80% 60% at 50% -10%, rgba(249, 115, 22,0.22) 0%, transparent 70%);
+    }
+    .prog-hero-content { position: relative; z-index: 2; }
+    .prog-hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--primary-light); color: var(--primary);
+      border: 1px solid var(--primary-glow); border-radius: var(--radius-full);
+      padding: 7px 20px; font-size: 0.75rem; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px;
+      animation: prog-fadeDown 0.7s ease both;
+    }
+    .prog-hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 900; color: #fff; line-height: 1.12;
+      margin-bottom: 16px; letter-spacing: -2px;
+      animation: prog-fadeUp 0.8s ease 0.1s both;
+    }
+    .prog-hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--secondary), #22D3EE);
+      background-size: 300% 300%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: prog-grad 5s ease infinite;
+    }
+    @keyframes prog-grad {
+      0%,100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    .prog-hero p {
+      font-size: 1.1rem; color: var(--text-sec); max-width: 620px;
+      margin: 0 auto 40px; line-height: 1.85;
+      animation: prog-fadeUp 0.8s ease 0.2s both;
+    }
+    .prog-hero-btns {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      animation: prog-fadeUp 0.8s ease 0.3s both;
+    }
+
+    @keyframes prog-fadeDown { from { opacity:0; transform:translateY(-18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes prog-fadeUp   { from { opacity:0; transform:translateY(22px);  } to { opacity:1; transform:translateY(0); } }
+
+    /* ── STATS STRIP ── */
+    .prog-stats-strip {
+      background: linear-gradient(90deg, #07090F 0%, #0B1323 50%, #07090F 100%);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+    .prog-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .prog-stat-item {
+      text-align: center; padding: 36px 20px;
+      border-right: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background var(--transition);
+    }
+    .prog-stat-item::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    .prog-stat-item:hover::before { transform: scaleX(1); }
+    .prog-stat-item:hover { background: rgba(249, 115, 22,0.04); }
+    .prog-stat-item:last-child { border-right: none; }
+    .prog-stat-icon { font-size: 1.5rem; margin-bottom: 12px; }
+    .prog-stat-num {
+      font-family: var(--font-display); font-size: 2.5rem; font-weight: 900;
+      color: #fff; line-height: 1; margin-bottom: 8px;
+    }
+    .prog-stat-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+
+    /* ── SECTION INTRO ── */
+    .prog-section-intro {
+      padding: 70px 0 10px;
+      text-align: center;
+    }
+    .prog-section-intro .section-tag { margin-bottom: 16px; }
+    .prog-section-intro h2 {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 14px;
+    }
+    .prog-section-intro p {
+      color: var(--text-sec); font-size: 1.05rem; max-width: 620px;
+      margin: 0 auto; line-height: 1.8;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-wrap { padding: 40px 0 50px; }
+    .filter-bar {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    }
+    .filter-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px; border-radius: var(--radius-full);
+      border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+      color: var(--text-sec); font-family: var(--font-display);
+      font-size: 0.82rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+    }
+    .filter-btn i { font-size: 0.85rem; }
+    .filter-btn:hover {
+      border-color: var(--primary); color: var(--primary);
+      background: var(--primary-light); transform: translateY(-2px);
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--primary), #3B82F6);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 20px rgba(249, 115, 22,0.35);
+      transform: translateY(-2px);
+    }
+    .filter-count {
+      background: rgba(255,255,255,0.15); border-radius: var(--radius-full);
+      font-size: 0.7rem; font-weight: 800; padding: 2px 7px;
+      min-width: 20px; text-align: center;
+    }
+    .filter-btn.active .filter-count { background: rgba(255,255,255,0.25); }
+
+    /* ── PROGRAM GRID ── */
+    .prog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+    /* ── CARD BASE ── */
+    .prog-card {
+      display: flex; flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .prog-card.visible { opacity: 1; transform: translateY(0); }
+    .prog-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 24px 50px -10px rgba(0,0,0,0.7), 0 0 40px rgba(249, 115, 22,0.12);
+      border-color: rgba(249, 115, 22,0.3);
+    }
+    /* Category accent left border on hover */
+    .prog-card[data-color="blue"]:hover   { border-left: 3px solid var(--primary); }
+    .prog-card[data-color="cyan"]:hover   { border-left: 3px solid var(--secondary); }
+    .prog-card[data-color="green"]:hover  { border-left: 3px solid #22C55E; }
+    .prog-card[data-color="orange"]:hover { border-left: 3px solid #F97316; }
+    .prog-card[data-color="purple"]:hover { border-left: 3px solid #A855F7; }
+
+    /* ── THUMB ── */
+    .prog-thumb { position: relative; overflow: hidden; flex-shrink: 0; }
+    .prog-thumb img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1); }
+    .prog-card:hover .prog-thumb img { transform: scale(1.08); }
+    .prog-thumb-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(9,13,22,0.7) 100%);
+      pointer-events: none;
+    }
+
+    /* Status badge */
+    .prog-status {
+      position: absolute; top: 14px; right: 14px;
+      font-size: 0.66rem; font-weight: 800; padding: 5px 12px;
+      border-radius: var(--radius-full); letter-spacing: 1.5px;
+      text-transform: uppercase; backdrop-filter: blur(10px);
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .prog-status::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%; display: block;
+    }
+    .prog-status.active   { background: rgba(16,185,129,0.2); color: #34D399; border: 1px solid rgba(16,185,129,0.35); }
+    .prog-status.active::before { background: #34D399; box-shadow: 0 0 6px #34D399; animation: dot-pulse 1.5s infinite; }
+    .prog-status.open     { background: rgba(249, 115, 22,0.2); color: #60A5FA; border: 1px solid rgba(249, 115, 22,0.35); }
+    .prog-status.open::before { background: #60A5FA; box-shadow: 0 0 6px #60A5FA; }
+    @keyframes dot-pulse {
+      0%,100% { opacity: 1; box-shadow: 0 0 4px #34D399; }
+      50%      { opacity: 0.5; box-shadow: 0 0 10px #34D399; }
+    }
+
+    /* Category badge */
+    .prog-cat-badge {
+      position: absolute; top: 14px; left: 14px;
+      font-size: 0.66rem; font-weight: 800; padding: 5px 12px;
+      border-radius: var(--radius-full); background: rgba(9,13,22,0.82);
+      color: #fff; border: 1px solid rgba(255,255,255,0.12);
+      letter-spacing: 1px; text-transform: uppercase;
+      backdrop-filter: blur(8px);
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+
+    /* ── BODY ── */
+    .prog-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
+    .prog-name {
+      font-family: var(--font-display); font-size: 1.08rem; font-weight: 800;
+      margin-bottom: 10px; line-height: 1.4; color: #fff;
+    }
+    .prog-desc {
+      font-size: 0.875rem; color: var(--text-sec);
+      margin-bottom: 20px; line-height: 1.7; flex-grow: 1;
+    }
+
+    /* Meta row */
+    .prog-meta-row {
+      display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
+      padding-top: 16px; border-top: 1px solid var(--border);
+    }
+    .prog-meta {
+      font-size: 0.76rem; color: var(--text-sec);
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: var(--radius-full);
+    }
+    .prog-meta i { font-size: 0.72rem; }
+
+    /* Progress */
+    .prog-progress { margin-bottom: 22px; }
+    .prog-prog-header {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .prog-prog-raised { color: #fff; }
+    .prog-prog-pct {
+      font-family: var(--font-display); font-size: 0.85rem; font-weight: 800;
+      padding: 2px 10px; border-radius: var(--radius-full);
+      border: 1px solid rgba(249, 115, 22,0.35); color: var(--primary);
+      background: var(--primary-light);
+    }
+    .prog-prog-goal { color: var(--text-muted); font-size: 0.72rem; }
+    .prog-prog-footer {
+      display: flex; justify-content: space-between;
+      font-size: 0.72rem; color: var(--text-muted); margin-top: 8px;
+    }
+
+    /* Donor count badge */
+    .prog-donors {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.72rem; color: var(--text-sec); font-weight: 600;
+    }
+    .prog-donors i { color: var(--secondary); }
+
+    /* ── BUTTONS ── */
+    .prog-actions { display: flex; gap: 10px; margin-top: auto; padding-top: 4px; }
+    .prog-btn-main {
+      flex: 1.4;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: var(--font-display); font-weight: 800; font-size: 0.8rem;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 13px 18px; border-radius: var(--radius);
+      border: none; cursor: pointer; position: relative; overflow: hidden;
+      transition: all 0.25s ease; white-space: nowrap;
+    }
+    .prog-btn-main::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .prog-btn-main:hover::after { opacity: 1; }
+    .prog-btn-main:hover { transform: translateY(-2px); }
+    .prog-btn-main:active { transform: translateY(0); }
+
+    /* Color variants */
+    .pbtn-blue   { background: linear-gradient(135deg, #F97316, #3B82F6); color: #fff; box-shadow: 0 4px 16px rgba(249, 115, 22,0.35); }
+    .pbtn-cyan   { background: linear-gradient(135deg, #06B6D4, #22D3EE); color: #090D16; box-shadow: 0 4px 16px rgba(6,182,212,0.35); }
+    .pbtn-green  { background: linear-gradient(135deg, #16A34A, #22C55E); color: #fff; box-shadow: 0 4px 16px rgba(22,163,74,0.35); }
+    .pbtn-orange { background: linear-gradient(135deg, #EA580C, #F97316); color: #fff; box-shadow: 0 4px 16px rgba(234,88,12,0.35); }
+    .pbtn-purple { background: linear-gradient(135deg, #7C3AED, #A855F7); color: #fff; box-shadow: 0 4px 16px rgba(124,58,237,0.35); }
+
+    .prog-btn-sec {
+      flex: 1;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      font-family: var(--font-display); font-weight: 700; font-size: 0.78rem;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 13px 14px; border-radius: var(--radius);
+      border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+      color: var(--text-sec); cursor: pointer;
+      transition: all 0.2s ease; white-space: nowrap;
+    }
+    .prog-btn-sec:hover {
+      border-color: rgba(255,255,255,0.25); color: #fff;
+      background: rgba(255,255,255,0.06); transform: translateY(-2px);
+    }
+
+    /* ── CTA SECTION ── */
+    .prog-cta-wrap { padding: 80px 0; }
+    .prog-cta {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(249, 115, 22,0.12) 0%, rgba(6,182,212,0.06) 60%, rgba(9,13,22,0) 100%);
+      border: 1px solid rgba(249, 115, 22,0.2);
+      border-radius: 28px; padding: 80px 60px;
+      text-align: center;
+    }
+    .prog-cta::before {
+      content: ''; position: absolute;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(249, 115, 22,0.14) 0%, transparent 70%);
+      top: -150px; left: -150px; pointer-events: none;
+    }
+    .prog-cta::after {
+      content: ''; position: absolute;
+      width: 350px; height: 350px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+      bottom: -100px; right: -80px; pointer-events: none;
+    }
+    .prog-cta-inner { position: relative; z-index: 1; }
+    .prog-cta-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), rgba(6,182,212,0.1));
+      border: 1px solid rgba(249, 115, 22,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; color: var(--primary);
+      margin: 0 auto 28px;
+      animation: cta-float 4s ease-in-out infinite;
+    }
+    @keyframes cta-float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    .prog-cta h2 {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900; color: #fff; margin-bottom: 16px; letter-spacing: -1px;
+    }
+    .prog-cta h2 span { color: var(--primary); }
+    .prog-cta p {
+      color: var(--text-sec); font-size: 1.05rem; max-width: 580px;
+      margin: 0 auto 40px; line-height: 1.85;
+    }
+    .prog-cta-btns {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    }
+    .prog-cta-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      max-width: 800px; margin: 50px auto 0;
+    }
+    .prog-cta-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 20px; text-align: center;
+      transition: all var(--transition);
+    }
+    .prog-cta-card:hover {
+      background: rgba(249, 115, 22,0.06); border-color: rgba(249, 115, 22,0.25);
+      transform: translateY(-4px);
+    }
+    .prog-cta-card i { font-size: 1.6rem; margin-bottom: 12px; display: block; }
+    .prog-cta-card h4 {
+      font-family: var(--font-display); font-size: 0.9rem; font-weight: 800;
+      color: #fff; margin-bottom: 6px;
+    }
+    .prog-cta-card p { font-size: 0.8rem; color: var(--text-sec); line-height: 1.5; margin: 0; }
+
+    /* ── ANIMATIONS ── */
+
+    @keyframes prog-fadeDown {
+      from { opacity:0; transform:translateY(-20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes prog-fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px) {
+      .prog-grid { grid-template-columns: repeat(2, 1fr); }
+      .prog-cta-cards { grid-template-columns: 1fr 1fr; }
+      .prog-cta { padding: 60px 30px; }
+    }
+    @media(max-width:680px) {
+      .prog-grid { grid-template-columns: 1fr; }
+      .prog-stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .prog-stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .prog-stat-item:last-child { border-bottom: none; }
+      .prog-cta-cards { grid-template-columns: 1fr; }
+      .prog-cta { padding: 50px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/logo.webp" alt="Stackly Logo" class="loader-logo-img"/>
+  </div>
+
+  <!-- ════ NAVBAR ════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.webp" alt="Stackly Global Logo"/>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="programs.html" class="nav-link active">Our Programs</a></li>
+        <li><a href="volunteer.html" class="nav-link">Volunteers</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline btn-sm"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="donate.html" class="btn btn-primary btn-sm btn-pulse"><i class="fas fa-heart"></i> Donate Now</a>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Open Navigation">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="programs.html" class="nav-link active">Our Programs</a>
+    <a href="volunteer.html" class="nav-link">Volunteers</a>
+    <a href="about.html" class="nav-link">About Us</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+      <a href="login.html" class="btn btn-outline" style="justify-content:center;"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a href="donate.html" class="btn btn-primary" style="justify-content:center;"><i class="fas fa-heart"></i> Donate Now</a>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-bg" style="background-image:url('images/water_hero.webp')"></div>
+    <div class="page-header-overlay"></div>
+    <div class="page-header-content container">
+      <div class="breadcrumb"><a href="index.html">Home</a><i class="fas fa-chevron-right"></i><span>Our Programs</span></div>
+      <h1>Programs That Change Lives</h1>
+      <p>6 Active Humanitarian Drives — every campaign, fund allocation, and field deployment transparently tracked, audit-verified, and mapped to real beneficiaries.</p>
+    </div>
+  </div>
+
+  <!-- ════ STATS STRIP ════ -->
+  <div class="prog-stats-strip">
+    <div class="container">
+      <div class="prog-stats-grid">
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="color:var(--primary)"><i class="fas fa-rocket"></i></div>
+          <div class="prog-stat-num" data-counter data-target="6">0</div>
+          <div class="prog-stat-label">Active Campaigns</div>
+        </div>
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="color:var(--secondary)"><i class="fas fa-globe"></i></div>
+          <div class="prog-stat-num"><span data-counter data-target="45">0</span>+</div>
+          <div class="prog-stat-label">Countries Reached</div>
+        </div>
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="color:#22C55E"><i class="fas fa-people-group"></i></div>
+          <div class="prog-stat-num"><span data-counter data-target="120400">0</span></div>
+          <div class="prog-stat-label">Beneficiaries Served</div>
+        </div>
+        <div class="prog-stat-item">
+          <div class="prog-stat-icon" style="color:#F97316"><i class="fas fa-indian-rupee-sign"></i></div>
+          <div class="prog-stat-num">₹<span data-counter data-target="7">0</span>Cr+</div>
+          <div class="prog-stat-label">Total Funds Deployed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievements Stats Section -->
+  <section class="section">
+    <div class="container">
+      <div class="stats-card-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;">
+        <div class="glass-card reveal" style="padding: 36px; text-align: center;">
+          <div style="font-family: var(--font-display); font-size: 3.2rem; font-weight: 900; color: var(--primary); margin-bottom: 10px;">120K+</div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 2.5px;">Beneficiaries Served</div>
+        </div>
+        <div class="glass-card reveal" style="padding: 36px; text-align: center; transition-delay: 0.1s;">
+          <div style="font-family: var(--font-display); font-size: 3.2rem; font-weight: 900; color: var(--secondary); margin-bottom: 10px;">45+</div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 2.5px;">Countries Reached</div>
+        </div>
+        <div class="glass-card reveal" style="padding: 36px; text-align: center; transition-delay: 0.2s;">
+          <div style="font-family: var(--font-display); font-size: 3.2rem; font-weight: 900; color: #22C55E; margin-bottom: 10px;">82</div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 2.5px;">Water Plants Built</div>
+        </div>
+        <div class="glass-card reveal" style="padding: 36px; text-align: center; transition-delay: 0.3s;">
+          <div style="font-family: var(--font-display); font-size: 3.2rem; font-weight: 900; color: var(--accent); margin-bottom: 10px;">1.2M+</div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 2.5px;">Meals Served</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Milestones Timeline Section -->
+  <section class="section section-alt" style="padding-bottom: 60px;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag"><i class="fas fa-timeline"></i> Our Impact Journey</div>
+        <h2 class="section-title">Program <span>Milestones</span></h2>
+        <p class="section-desc">Key moments that shaped our humanitarian programs and expanded our reach.</p>
+      </div>
+
+      <div class="timeline-wrap" style="position: relative; max-width: 850px; margin: 0 auto; padding-left: 36px;">
+        <div style="position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent)); opacity: 0.3;"></div>
+
+        <!-- Timeline Item 1 -->
+        <div class="timeline-item" style="position: relative; margin-bottom: 42px;">
+          <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: var(--primary); box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);"></div>
+          <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: var(--primary);">2012 — First Mobile Clinic</div>
+          <div style="font-size: 0.875rem; color: var(--text-sec); line-height: 1.7;">Launched our very first mobile medical clinic in Salem, Tamil Nadu, serving 5,000+ patients in the first year.</div>
+        </div>
+
+        <!-- Timeline Item 2 -->
+        <div class="timeline-item" style="position: relative; margin-bottom: 42px;">
+          <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: var(--secondary); box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);"></div>
+          <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: var(--secondary);">2015 — Digital Schools Launch</div>
+          <div style="font-size: 0.875rem; color: var(--text-sec); line-height: 1.7;">Introduced our first solar-powered digital classrooms in Odisha, bringing tablet-based learning to 3,000+ students.</div>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="timeline-item" style="position: relative; margin-bottom: 42px;">
+          <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: #22C55E; box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);"></div>
+          <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: #22C55E;">2018 — First Solar RO Plant</div>
+          <div style="font-size: 0.875rem; color: var(--text-sec); line-height: 1.7;">Installed our first solar-powered reverse-osmosis water plant in Rajasthan, providing clean water to 10,000+ people daily.</div>
+        </div>
+
+        <!-- Timeline Item 4 -->
+        <div class="timeline-item" style="position: relative;">
+          <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: var(--accent); box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);"></div>
+          <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: var(--accent);">2026 — 1 Million Meals Served</div>
+          <div style="font-size: 0.875rem; color: var(--text-sec); line-height: 1.7;">Celebrated the milestone of serving 1 million nutritious meals through our Zero Hunger Kitchen Hubs.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ SECTION INTRO ════ -->
+  <div class="prog-section-intro">
+    <div class="container">
+      <div class="section-tag"><i class="fas fa-layer-group"></i> All Programs</div>
+      <h2>Explore Every Active Campaign</h2>
+      <p>Filter by category to find programs that match your passion. Every card shows real‑time fundraising data, beneficiary counts, and direct action buttons.</p>
+    </div>
+  </div>
+
+  <!-- ════ FILTER + PROGRAMS ════ -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+
+      <!-- Filter Bar -->
+      <div class="filter-wrap">
+        <div class="filter-bar" id="filterBar">
+          <button class="filter-btn active" data-filter="all">
+            <i class="fas fa-th-large"></i> All Programs <span class="filter-count">6</span>
+          </button>
+          <button class="filter-btn" data-filter="education">
+            <i class="fas fa-graduation-cap"></i> Education <span class="filter-count">2</span>
+          </button>
+          <button class="filter-btn" data-filter="water">
+            <i class="fas fa-droplet"></i> Clean Water <span class="filter-count">1</span>
+          </button>
+          <button class="filter-btn" data-filter="healthcare">
+            <i class="fas fa-heartbeat"></i> Healthcare <span class="filter-count">1</span>
+          </button>
+          <button class="filter-btn" data-filter="hunger">
+            <i class="fas fa-utensils"></i> Zero Hunger <span class="filter-count">1</span>
+          </button>
+          <button class="filter-btn" data-filter="environment">
+            <i class="fas fa-leaf"></i> Environment <span class="filter-count">1</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Programs Grid -->
+      <div class="prog-grid" id="progGrid">
+
+        <!-- CARD 1: Education — Digital Classrooms -->
+        <div class="prog-card ripple" data-category="education" data-color="blue" data-delay="1">
+          <div class="prog-thumb">
+            <img src="images/home_pillar_edu.webp" alt="Digital Classrooms Program"/>
+            <div class="prog-thumb-overlay"></div>
+            <span class="prog-status active"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Active</span>
+            <span class="prog-cat-badge" style="color:#93C5FD;"><i class="fas fa-graduation-cap"></i> Education</span>
+          </div>
+          <div class="prog-body">
+            <h3 class="prog-name">Starlink Jungle Classrooms</h3>
+            <p class="prog-desc">Solar-powered tablet labs and satellite internet equipping remote schools with daily STEM modules and real-time progress tracking.</p>
+            <div class="prog-meta-row">
+              <span class="prog-meta"><i class="fas fa-location-dot" style="color:var(--primary)"></i> Odisha, India</span>
+              <span class="prog-meta"><i class="fas fa-users" style="color:#60A5FA"></i> 3,200 Students</span>
+            </div>
+            <div class="prog-progress">
+              <div class="prog-prog-header">
+                <span class="prog-prog-raised">₹38,50,000 Raised</span>
+                <span class="prog-prog-pct">64%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill prog-fill-anim" style="width:0%" data-width="64%"></div>
+              </div>
+              <div class="prog-prog-footer">
+                <span class="prog-donors"><i class="fas fa-heart"></i> 1,248 donors</span>
+                <span class="prog-prog-goal">Goal: ₹60,00,000</span>
+              </div>
+            </div>
+            <div class="prog-actions">
+              <a href="404.html" class="prog-btn-main pbtn-blue"><i class="fas fa-graduation-cap"></i> Fund Schools</a>
+              <a href="portal.html" class="prog-btn-sec"><i class="fas fa-satellite-dish"></i> Live Tracker</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: Education — Girls Scholarship -->
+        <div class="prog-card ripple" data-category="education" data-color="blue" data-delay="2">
+          <div class="prog-thumb">
+            <img src="images/community_uplift.webp" alt="Girls Scholarship Initiative"/>
+            <div class="prog-thumb-overlay"></div>
+            <span class="prog-status open"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Enrolling</span>
+            <span class="prog-cat-badge" style="color:#93C5FD;"><i class="fas fa-user-graduate"></i> Education</span>
+          </div>
+          <div class="prog-body">
+            <h3 class="prog-name">Girls Scholarship Initiative</h3>
+            <p class="prog-desc">Full scholarship packages for tribal girls — school fees, books, uniforms, and monthly STEM mentorship sessions.</p>
+            <div class="prog-meta-row">
+              <span class="prog-meta"><i class="fas fa-location-dot" style="color:var(--primary)"></i> Jharkhand, India</span>
+              <span class="prog-meta"><i class="fas fa-user-graduate" style="color:#60A5FA"></i> 500 Scholars</span>
+            </div>
+            <div class="prog-progress">
+              <div class="prog-prog-header">
+                <span class="prog-prog-raised">₹22,80,000 Raised</span>
+                <span class="prog-prog-pct">57%</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill prog-fill-anim" style="width:0%" data-width="57%"></div></div>
+              <div class="prog-prog-footer">
+                <span class="prog-donors"><i class="fas fa-heart" style="color:var(--primary);"></i> 740 donors</span>
+                <span class="prog-prog-goal">Goal: ₹40,00,000</span>
+              </div>
+            </div>
+            <div class="prog-actions">
+              <a href="404.html" class="prog-btn-main pbtn-blue"><i class="fas fa-book"></i> Sponsor Scholar</a>
+              <a href="404.html" class="prog-btn-sec"><i class="fas fa-chalkboard-user"></i> Mentor</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: Clean Water — Solar RO Plants -->
+        <div class="prog-card ripple" data-category="water" data-color="blue" data-delay="3">
+          <div class="prog-thumb">
+            <img src="images/home_pillar_water.webp" alt="Clean Water RO Plant"/>
+            <div class="prog-thumb-overlay"></div>
+            <span class="prog-status active"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Active</span>
+            <span class="prog-cat-badge" style="color:#93C5FD;"><i class="fas fa-droplet"></i> Clean Water</span>
+          </div>
+          <div class="prog-body">
+            <h3 class="prog-name">Solar RO Water Plants</h3>
+            <p class="prog-desc">Community reverse-osmosis filtration plants in Rajasthan villages facing arsenic contamination, supplying safe water daily.</p>
+            <div class="prog-meta-row">
+              <span class="prog-meta"><i class="fas fa-location-dot" style="color:var(--primary)"></i> Rajasthan, India</span>
+              <span class="prog-meta"><i class="fas fa-home" style="color:#60A5FA"></i> 5,200 Families</span>
+            </div>
+            <div class="prog-progress">
+              <div class="prog-prog-header"><span class="prog-prog-raised">₹24,75,000 Raised</span><span class="prog-prog-pct">55%</span></div>
+              <div class="progress-bar"><div class="progress-fill prog-fill-anim" style="width:0%" data-width="55%"></div></div>
+              <div class="prog-prog-footer"><span class="prog-donors"><i class="fas fa-heart" style="color:var(--primary);"></i> 672 donors</span><span class="prog-prog-goal">Goal: ₹45,00,000</span></div>
+            </div>
+            <div class="prog-actions">
+              <a href="404.html" class="prog-btn-main pbtn-blue"><i class="fas fa-droplet"></i> Fund Water Plant</a>
+              <a href="portal.html" class="prog-btn-sec"><i class="fas fa-satellite-dish"></i> Live pH Data</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: Healthcare — Mobile Clinic Vans -->
+        <div class="prog-card ripple" data-category="healthcare" data-color="cyan" data-delay="4">
+          <div class="prog-thumb">
+            <img src="images/prog_mobile_clinic.webp" alt="Mobile Medical Clinic Vans"/>
+            <div class="prog-thumb-overlay"></div>
+            <span class="prog-status open"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Enrolling</span>
+            <span class="prog-cat-badge" style="color:#A5F3FC;"><i class="fas fa-truck-medical"></i> Healthcare</span>
+          </div>
+          <div class="prog-body">
+            <h3 class="prog-name">Mobile Clinic Vans</h3>
+            <p class="prog-desc">Specialized 4×4 clinic vans running free health camps, diagnostics, and vaccinations in remote Rajasthan districts.</p>
+            <div class="prog-meta-row">
+              <span class="prog-meta"><i class="fas fa-location-dot" style="color:var(--primary)"></i> Rajasthan, India</span>
+              <span class="prog-meta"><i class="fas fa-truck-medical" style="color:#22D3EE"></i> 5 Vans Active</span>
+            </div>
+            <div class="prog-progress">
+              <div class="prog-prog-header">
+                <span class="prog-prog-raised">₹52,00,000 Raised</span>
+                <span class="prog-prog-pct" style="color:var(--secondary);background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.3);">65%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill prog-fill-anim" style="width:0%;background:linear-gradient(90deg,#06B6D4,#22D3EE);" data-width="65%"></div>
+              </div>
+              <div class="prog-prog-footer">
+                <span class="prog-donors"><i class="fas fa-heart" style="color:#22D3EE;"></i> 1,850 donors</span>
+                <span class="prog-prog-goal">Goal: ₹80,00,000</span>
+              </div>
+            </div>
+            <div class="prog-actions">
+              <a href="404.html" class="prog-btn-main pbtn-cyan"><i class="fas fa-truck-medical"></i> Fund Van</a>
+              <a href="404.html" class="prog-btn-sec"><i class="fas fa-user-doctor"></i> Join as Doctor</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5: Zero Hunger — Community Kitchens -->
+        <div class="prog-card ripple" data-category="hunger" data-color="orange" data-delay="5">
+          <div class="prog-thumb">
+            <img src="images/home_pillar_hunger.webp" alt="Zero Hunger Kitchen Hub"/>
+            <div class="prog-thumb-overlay"></div>
+            <span class="prog-status active"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Active</span>
+            <span class="prog-cat-badge" style="color:#FDBA74;"><i class="fas fa-utensils"></i> Zero Hunger</span>
+          </div>
+          <div class="prog-body">
+            <h3 class="prog-name">Zero Hunger Kitchen Hubs</h3>
+            <p class="prog-desc">Community-run kitchens serving nutritious meals daily to children, elderly, and daily wage workers in underserved areas.</p>
+            <div class="prog-meta-row">
+              <span class="prog-meta"><i class="fas fa-location-dot" style="color:var(--primary)"></i> Mumbai, India</span>
+              <span class="prog-meta"><i class="fas fa-utensils" style="color:#F97316"></i> 32K Meals/Month</span>
+            </div>
+            <div class="prog-progress">
+              <div class="prog-prog-header">
+                <span class="prog-prog-raised">₹45,00,000 Raised</span>
+                <span class="prog-prog-pct" style="color:#F97316;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.3);">75%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill prog-fill-anim" style="width:0%;background:linear-gradient(90deg,#EA580C,#F97316);" data-width="75%"></div>
+              </div>
+              <div class="prog-prog-footer">
+                <span class="prog-donors"><i class="fas fa-heart" style="color:#F97316;"></i> 2,130 donors</span>
+                <span class="prog-prog-goal">Goal: ₹60,00,000</span>
+              </div>
+            </div>
+            <div class="prog-actions">
+              <a href="404.html" class="prog-btn-main pbtn-orange"><i class="fas fa-utensils"></i> Fund Meals</a>
+              <a href="404.html" class="prog-btn-sec"><i class="fas fa-hands-helping"></i> Help Serve</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 6: Environment — Solar Micro-grids -->
+        <div class="prog-card ripple" data-category="environment" data-color="green" data-delay="6">
+          <div class="prog-thumb">
+            <img src="images/energy_hero.webp" alt="Solar Micro-grid Installation"/>
+            <div class="prog-thumb-overlay"></div>
+            <span class="prog-status active"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Active</span>
+            <span class="prog-cat-badge" style="color:#86EFAC;"><i class="fas fa-leaf"></i> Environment</span>
+          </div>
+          <div class="prog-body">
+            <h3 class="prog-name">Solar Micro-grids</h3>
+            <p class="prog-desc">Replacing kerosene lamps with decentralized solar arrays — powering schools, vaccine fridges, and homes in rural areas.</p>
+            <div class="prog-meta-row">
+              <span class="prog-meta"><i class="fas fa-location-dot" style="color:var(--primary)"></i> Maharashtra, India</span>
+              <span class="prog-meta"><i class="fas fa-bolt" style="color:#FCD34D"></i> 32 Schools Lit</span>
+            </div>
+            <div class="prog-progress">
+              <div class="prog-prog-header">
+                <span class="prog-prog-raised">₹30,00,000 Raised</span>
+                <span class="prog-prog-pct" style="color:#22C55E;background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);">60%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill prog-fill-anim" style="width:0%;background:linear-gradient(90deg,#16A34A,#22C55E);" data-width="60%"></div>
+              </div>
+              <div class="prog-prog-footer">
+                <span class="prog-donors"><i class="fas fa-heart" style="color:#22C55E;"></i> 920 donors</span>
+                <span class="prog-prog-goal">Goal: ₹50,00,000</span>
+              </div>
+            </div>
+            <div class="prog-actions">
+              <a href="404.html" class="prog-btn-main pbtn-green"><i class="fas fa-solar-panel"></i> Fund Solar</a>
+              <a href="404.html" class="prog-btn-sec"><i class="fas fa-info-circle"></i> Learn More</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CTA SECTION ════ -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="prog-cta-wrap">
+        <div class="prog-cta">
+          <div class="prog-cta-inner">
+            <div class="prog-cta-icon">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h2>Ready to <span>Make an Impact?</span></h2>
+            <p>Your support directly fuels the programs you see above. Every donation is tracked and verified, with full transparency on how your funds are used.</p>
+            <div class="prog-cta-btns">
+              <a href="404.html" class="btn btn-primary btn-lg"><i class="fas fa-heart"></i> Donate Now</a>
+              <a href="404.html" class="btn btn-ghost btn-lg"><i class="fas fa-users"></i> Join Our Team</a>
+            </div>
+            <div class="prog-cta-cards" style="margin-top:40px;">
+              <div class="prog-cta-card">
+                <i class="fas fa-seal-check" style="color:var(--primary)"></i>
+                <h4>100% Transparent</h4>
+                <p>Every transaction tracked in real-time on StackPortal</p>
+              </div>
+              <div class="prog-cta-card">
+                <i class="fas fa-shield-heart" style="color:var(--secondary)"></i>
+                <h4>Audit Verified</h4>
+                <p>All programs independently audited annually</p>
+              </div>
+              <div class="prog-cta-card">
+                <i class="fas fa-users-line" style="color:#22C55E"></i>
+                <h4>Community Led</h4>
+                <p>Local volunteers lead every program on the ground</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo">
+                            <a
+                                href="index.html"
+                                class="nav-logo"
+                                style="font-size: 1.2rem"
+                            >
+                                <img
+                                    src="images/logo.webp"
+                                    alt="Stackly Global Logo"
+                                />
+                            </a>
+                        </div>
+                        <p class="footer-desc">
+                            A transparent metrics-driven humanitarian platform
+                            mapping donations directly to local healthcare,
+                            nutrition, and schooling outcomes — verified in
+                            real-time.
+                        </p>
+                        <div class="footer-socials">
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Facebook"
+                                ><i class="fab fa-facebook-f"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Instagram"
+                                ><i class="fab fa-instagram"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Twitter X"
+                                ><i class="fab fa-x-twitter"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="LinkedIn"
+                                ><i class="fab fa-linkedin-in"></i
+                            ></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Navigation</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="index.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Home</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> Our
+                                    Programs</a
+                                >
+                            </li>
+                            <li>
+                                <a href="volunteer.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Volunteers</a
+                                >
+                            </li>
+                            <li>
+                                <a href="about.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> About
+                                    Us</a
+                                >
+                            </li>
+                            <li>
+                                <a href="contact.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Contact</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Focus Areas</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="programs.html?filter=education" class="footer-link"><i class="fas fa-chevron-right"></i> Digital Schooling</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=healthcare" class="footer-link"><i class="fas fa-chevron-right"></i> Pediatric Care</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=water" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> Clean
+                                    Water Plants</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=hunger" class="footer-link"><i class="fas fa-chevron-right"></i> Nutrition Hubs</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=environment" class="footer-link"><i class="fas fa-chevron-right"></i> Agroforestry</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Contact Us</h4>
+                        <ul
+                            class="footer-links"
+                            style="
+                                display: flex;
+                                flex-direction: column;
+                                gap: 14px;
+                                font-size: 0.85rem;
+                                color: var(--text-sec);
+                                line-height: 1.6;
+                            "
+                        >
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: flex-start;
+                                "
+                            >
+                                <i
+                                    class="fas fa-map-marker-alt"
+                                    style="
+                                        color: var(--primary);
+                                        margin-top: 4px;
+                                    "
+                                ></i>
+                                <span
+                                    >MMR Complex, Chinna Thirupathi, Salem,
+                                    Tamil Nadu 636008</span
+                                >
+                            </li>
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                "
+                            >
+                                <i
+                                    class="fas fa-phone-alt"
+                                    style="color: var(--primary)"
+                                ></i>
+                                <a
+                                    href="tel:+919876543210"
+                                    style="
+                                        color: var(--text-sec);
+                                        transition: color var(--transition-fast);
+                                    "
+                                    >+91 98765 43210</a
+                                >
+                            </li>
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                "
+                            >
+                                <i
+                                    class="fas fa-envelope"
+                                    style="color: var(--primary)"
+                                ></i>
+                                <a
+                                    href="mailto:support@stackly.org"
+                                    style="
+                                        color: var(--text-sec);
+                                        transition: color var(--transition-fast);
+                                    "
+                                    >support@stackly.org</a
+                                >
+                            </li>
+                        </ul>
+                        <div
+                            style="
+                                margin-top: 24px;
+                                padding-top: 24px;
+                                border-top: 1px solid var(--border);
+                            "
+                        >
+                            <a
+                                href="portal.html"
+                                class="btn btn-ghost btn-sm"
+                                style="width: 100%; justify-content: center"
+                                ><i class="fas fa-satellite-dish"></i> Access
+                                StackPortal</a
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <div>
+                        &copy; 2026 Stackly Global Foundation. All rights
+                        reserved. Registered 501(c)(3) nonprofit.
+                    </div>
+                    <div class="footer-bottom-links">
+                        <a href="404.html" class="footer-bottom-link"
+                            >Privacy Policy</a
+                        >
+                        <a href="404.html" class="footer-bottom-link"
+                            >Terms of Service</a
+                        >
+                        <a href="404.html" class="footer-bottom-link">Audit Reports</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+  <script src="js/main.js?v=1"></script>
+</body>
+</html>

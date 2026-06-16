@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — Stackly Global</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/auth.css"/>
+  <style>
+    /* Access Role Select Custom Style */
+    .form-group select {
+      width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 18px; color: var(--text); font-family: var(--font-body);
+      font-size: 0.9rem; transition: all var(--transition-fast);
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394A3B8'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center; background-size: 20px;
+    }
+    .form-group select:focus {
+      outline: none; border-color: var(--primary); background: rgba(255, 255, 255, 0.06);
+    }
+    .form-group select option {
+      background: #090D16;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/logo.webp" alt="Stackly Logo" class="loader-logo-img"/>
+  </div>
+
+  <div class="auth-page">
+    
+    <!-- ── Left Branding Panel ── -->
+    <div class="auth-panel">
+      <div class="panel-dots"></div>
+
+      <div class="panel-tagline">
+        Empowering Lives,<br/>One <span>Child at a Time</span>
+      </div>
+
+      <p class="panel-desc">
+        Access your telemetry receipt logs, Section 80G tax documents, track active digital classroom sponsorships, or audit mobile clinic checkup records.
+      </p>
+
+      <div class="panel-stats">
+        <div class="panel-stat">
+          <span class="panel-stat-num">120K+</span>
+          <span class="panel-stat-label">Students</span>
+        </div>
+        <div class="panel-stat">
+          <span class="panel-stat-num">50K+</span>
+          <span class="panel-stat-label">Patients</span>
+        </div>
+        <div class="panel-stat">
+          <span class="panel-stat-num">1.2M+</span>
+          <span class="panel-stat-label">Meals Cooked</span>
+        </div>
+      </div>
+
+      <div class="panel-testimonial">
+        <p>"Stackly's platform lets us track every water station RO cartridge capacity remotely. We always know when maintenance runs are coming."</p>
+        <div class="panel-testimonial-author">Dr. Anita Sharma — Founder</div>
+      </div>
+    </div>
+
+    <!-- ── Right Form Panel ── -->
+    <div class="auth-form-panel">
+
+      <!-- Back Button -->
+      <div style="position:absolute; top:40px; right:40px; font-family:'Sora',sans-serif;">
+        <a href="#" onclick="if(document.referrer){history.back()}else{location.href='index.html'}; return false;"
+           style="font-size:0.82rem; font-weight:700; color:var(--text-sec); text-transform:uppercase; letter-spacing:1.5px; display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-arrow-left" style="font-size:0.75rem; color:var(--primary);"></i> Go Back
+        </a>
+      </div>
+      
+
+
+      <div class="auth-form-container">
+        
+        <div class="form-logo" style="margin-bottom: 28px; text-align: left;">
+          <a href="index.html">
+            <img src="images/logo.webp" alt="Stackly Global Logo" style="height: 110px; width: auto; object-fit: contain; border-radius: 50%; filter: hue-rotate(150deg) saturate(1.5);"/>
+          </a>
+        </div>
+
+        <div class="auth-header">
+          <h2>Access Stackly</h2>
+          <p>Don't have an audit account? <a href="register.html">Register here</a></p>
+        </div>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <!-- Inline Error message placeholder -->
+          <div id="loginError" style="display:none; color:var(--red); font-size:0.85rem; border:1px solid rgba(239, 68, 68, 0.2); background:rgba(239, 68, 68, 0.05); padding:10px; border-radius:var(--radius-sm); text-align:center; font-weight:600; margin-bottom:15px;"></div>
+
+          <div class="form-group">
+            <label class="form-label">Secure Email Address</label>
+            <div class="form-input-group">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="loginEmail" class="form-input" placeholder="you@domain.com" required/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Access Role</label>
+            <select id="loginRole" required>
+              <option value="" disabled selected>Select Role</option>
+              <option value="donor">Donor (80G Tax Deductions)</option>
+              <option value="volunteer">Volunteer (Field Squad Duty)</option>
+              <option value="auditor">Auditor (Public Telemetry Logs)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="form-input-group">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required/>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox"/>
+              Remember device
+            </label>
+            <a href="404.html" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="justify-content:center; margin-top:10px;"><i class="fas fa-key"></i> Authorize Session</button>
+        </form>
+
+        <div class="social-login">
+          <div class="social-divider">Or Access With</div>
+          
+          <div class="social-btns">
+            <a href="404.html" class="social-btn" id="googleLogin">
+              <i class="fab fa-google" style="color:#EA4335;"></i> Google Access
+            </a>
+            <a href="404.html" class="social-btn" id="facebookLogin">
+              <i class="fab fa-facebook" style="color:#1877F2;"></i> Facebook Access
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Custom Script -->
+  <script src="js/main.js?v=1"></script>
+</body>
+</html>

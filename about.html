@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — Stackly Global</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>"/>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  
+  <style>
+    /* ─── ABOUT SPECIFIC STYLES ─── */
+    .mission-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 60px; align-items: center; }
+    .mission-img-wrap { position: relative; border-radius: var(--radius-xl); overflow: hidden; }
+    .mission-img-wrap img { width: 100%; height: 440px; object-fit: cover; }
+    .mission-badge {
+      position: absolute; bottom: 30px; right: 30px;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      backdrop-filter: blur(12px); border-radius: var(--radius-lg);
+      padding: 20px 24px; text-align: center;
+    }
+    .mission-badge-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 4px; }
+    .mission-badge-text { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--text-sec); letter-spacing: 1px; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: clamp(60px, 8vw, 100px); }
+    .value-card { 
+      padding: 40px 30px; text-align: center; border-radius: var(--radius-xl); 
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)); 
+      border: 1px solid rgba(255, 255, 255, 0.06); 
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    }
+    .value-card:hover { 
+      transform: translateY(-10px) scale(1.02); 
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(249, 115, 22, 0.15); 
+      border-color: rgba(249, 115, 22, 0.3); 
+    }
+    .value-icon { 
+      font-size: 2.5rem; color: var(--primary); margin: 0 auto 24px; 
+      display: inline-flex; align-items: center; justify-content: center; 
+      width: 80px; height: 80px; border-radius: 50%; 
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), transparent); 
+      border: 1px solid rgba(249, 115, 22, 0.2);
+    }
+    .value-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; margin-bottom: 14px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+    .value-desc { font-size: 0.95rem; color: var(--text-sec); line-height: 1.7; }
+
+    .stats-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .stat-card-item {
+      padding: 40px 24px; text-align: center; border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative; overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .stat-card-item:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+      transform: translateY(-5px);
+    }
+
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 50px; }
+    .team-card { overflow: hidden; text-align: center; display: flex; flex-direction: column; }
+    .team-photo { height: 260px; width: 100%; object-fit: cover; transition: transform 0.5s; }
+    .team-card:hover .team-photo { transform: scale(1.05); }
+    .team-info { padding: 24px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .team-name { font-family: var(--font-display); font-size: 0.98rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .team-role { font-size: 0.78rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+    .team-bio { font-size: 0.82rem; color: var(--text-sec); line-height: 1.55; }
+
+    @media(max-width: 1024px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr; }
+      .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+      .mission-img-wrap img { height: 320px; }
+    }
+    @media(max-width: 600px) {
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/logo.webp" alt="Stackly Logo" class="loader-logo-img"/>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.webp" alt="Stackly Global Logo"/>
+        
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="programs.html" class="nav-link">Our Programs</a></li>
+        <li><a href="volunteer.html" class="nav-link">Volunteers</a></li>
+        <li><a href="about.html" class="nav-link active">About Us</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline btn-sm"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="donate.html" class="btn btn-primary btn-sm btn-pulse"><i class="fas fa-heart"></i> Donate Now</a>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Open Navigation">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Dropdown Nav -->
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="programs.html" class="nav-link">Our Programs</a>
+    <a href="volunteer.html" class="nav-link">Volunteers</a>
+    <a href="about.html" class="nav-link active">About Us</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+      <a href="login.html" class="btn btn-outline w-full" style="justify-content:center;"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a href="donate.html" class="btn btn-primary w-full" style="justify-content:center;"><i class="fas fa-heart"></i> Donate Now</a>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-bg" style="background-image:url('images/education_hero.webp')"></div>
+    <div class="page-header-overlay"></div>
+    <div class="page-header-content container">
+      <div class="breadcrumb"><a href="index.html">Home</a><i class="fas fa-chevron-right"></i><span>About Us</span></div>
+      <h1>About Stackly Global</h1>
+      <p>14 years of constructing local networks of health, schooling, water, and food for families in need.</p>
+    </div>
+  </div>
+
+  <!-- Our Story Section -->
+  <section class="section">
+    <div class="container">
+      <div class="mission-grid">
+        <div class="mission-img-wrap reveal">
+          <img src="images/medical_hero.webp" alt="Our Inception Story"/>
+          <div class="mission-badge">
+            <div class="mission-badge-num">2012</div>
+            <div class="mission-badge-text">Founded In<br>India</div>
+          </div>
+        </div>
+        
+        <div class="reveal" style="transition-delay: 0.15s;">
+          <div class="section-tag"><i class="fas fa-book-open"></i> Our Inception</div>
+          <h2 class="section-title">Born from a Promise, <span>Built on Hope</span></h2>
+          <p style="color:var(--text-sec); line-height:1.8; margin-bottom:16px; font-size:0.98rem;">
+            In the winter of 2012, our co-founder Dr. Anita Sharma watched a 4-year-old girl named Meena pass away waiting for a heart surgery her family could not afford. The surgery would have cost ₹1.8 lakhs—a sum raised on social media in just 3 days, but Meena passed away two days before the surgery could happen.
+          </p>
+          <p style="color:var(--text-sec); line-height:1.8; margin-bottom:16px; font-size:0.98rem;">
+            Dr. Sharma promised to build a transparent, localized network of care so no child would ever lose their life to poverty. Stackly Global was born.
+          </p>
+          <p style="color:var(--text-sec); line-height:1.8; margin-bottom:28px; font-size:0.98rem;">
+            We operate across 22 states in India and 18 developing countries with a network of partner clinics, schools, and nutrition kitchens. We map every donation to physical aid delivery, tracking every student, patient, and daily meal logs.
+          </p>
+          <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <a href="404.html" class="btn btn-primary"><i class="fas fa-heart"></i> Support Mission</a>
+            <a href="404.html" class="btn btn-outline"><i class="fas fa-hands-helping"></i> Enlist in a Squad</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Values -->
+      <div class="values-grid">
+        <div class="value-card reveal">
+          <div class="value-icon"><i class="fas fa-list-check"></i></div>
+          <h3 class="value-title">Vetted Integrity</h3>
+          <p class="value-desc">Every donation yields a physical aid credit logged to our open registry. Donors receive logs to view school weeks or clinic checkups they sponsored.</p>
+        </div>
+        <div class="value-card reveal" style="transition-delay: 0.1s;">
+          <div class="value-icon"><i class="fas fa-stethoscope"></i></div>
+          <h3 class="value-title">Medical & Science Lead</h3>
+          <p class="value-desc">All campaigns are guided by pediatricians, water quality scientists, and nutritionists. We audit food calories and water purity regularly.</p>
+        </div>
+        <div class="value-card reveal" style="transition-delay: 0.2s;">
+          <div class="value-icon"><i class="fas fa-house-chimney-window"></i></div>
+          <h3 class="value-title">Local Outpost Support</h3>
+          <p class="value-desc">We work directly with local villages. We hire and train local cooks, teachers, and maintenance technicians to sustain communities internally.</p>
+        </div>
+      </div>
+
+      <!-- Achievements Stats Section -->
+      <section class="section" style="padding-top: 120px;">
+        <div class="container">
+          <div class="stats-card-grid">
+            <div class="stat-card-item reveal">
+              <div style="font-family: var(--font-display); font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">120K+</div>
+              <div style="font-size: 0.85rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1.5px;">Children Educated</div>
+            </div>
+            <div class="stat-card-item reveal" style="transition-delay: 0.1s;">
+              <div style="font-family: var(--font-display); font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--secondary), #3B82F6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">50K+</div>
+              <div style="font-size: 0.85rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1.5px;">Patients Treated</div>
+            </div>
+            <div class="stat-card-item reveal" style="transition-delay: 0.2s;">
+              <div style="font-family: var(--font-display); font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #22C55E, #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">82</div>
+              <div style="font-size: 0.85rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1.5px;">Water Plants Built</div>
+            </div>
+            <div class="stat-card-item reveal" style="transition-delay: 0.3s;">
+              <div style="font-family: var(--font-display); font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">1.2M+</div>
+              <div style="font-size: 0.85rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1.5px;">Meals Served</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Milestones Timeline Section -->
+      <section class="section section-alt">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-tag"><i class="fas fa-timeline"></i> Our Journey</div>
+            <h2 class="section-title">Key <span>Milestones</span></h2>
+            <p class="section-desc">From a single clinic to a global network of hope.</p>
+          </div>
+
+          <div class="timeline-wrap" style="position: relative; max-width: 850px; margin: 0 auto; padding-left: 36px;">
+            <div style="position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent)); opacity: 0.3;"></div>
+
+            <!-- Timeline Item 1 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 42px;">
+              <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: var(--primary); box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);"></div>
+              <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: var(--primary);">2012 — Foundation</div>
+              <div style="font-size: 0.88rem; color: var(--text-sec); line-height: 1.65;">Stackly Global was born with a single mobile clinic in Salem, Tamil Nadu, serving 500+ families in the first year.</div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 42px;">
+              <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: var(--secondary); box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);"></div>
+              <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: var(--secondary);">2015 — Digital Schools</div>
+              <div style="font-size: 0.88rem; color: var(--text-sec); line-height: 1.65;">Launched our first digital classrooms, bringing tablet-based learning to 5,000+ students in 30+ rural schools.</div>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 42px;">
+              <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: #22C55E; box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);"></div>
+              <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: #22C55E;">2018 — Water Initiative</div>
+              <div style="font-size: 0.88rem; color: var(--text-sec); line-height: 1.65;">Installed our first 20 solar-powered water filtration micro-plants, providing clean water to 10,000+ people daily.</div>
+            </div>
+
+            <!-- Timeline Item 4 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 42px;">
+              <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: var(--accent); box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);"></div>
+              <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: var(--accent);">2022 — Global Expansion</div>
+              <div style="font-size: 0.88rem; color: var(--text-sec); line-height: 1.65;">Expanded operations to 18+ developing countries, reaching 120,000+ children in total.</div>
+            </div>
+
+            <!-- Timeline Item 5 -->
+            <div class="timeline-item" style="position: relative;">
+              <div style="position: absolute; left: -36px; top: 4px; width: 18px; height: 18px; border-radius: 50%; border: 4px solid var(--bg); background: var(--primary); box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);"></div>
+              <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; color: var(--primary);">2026 — 1M Meals</div>
+              <div style="font-size: 0.88rem; color: var(--text-sec); line-height: 1.65;">Achieved our 1 million meals served milestone, with ZeroHunger kitchens serving nutritious meals daily to 50,000+ children.</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag"><i class="fas fa-user-doctor"></i> Leadership</div>
+        <h2 class="section-title">The Operational <span>Council</span></h2>
+        <p class="section-desc">Meet the clinicians, educators, and engineers coordinating our global humanitarian squads.</p>
+      </div>
+
+      <div class="team-grid">
+        <!-- Team 1 -->
+        <div class="glass-card team-card">
+          <img src="images/avatar_anita.webp" alt="Dr. Anita Sharma" class="team-photo"/>
+          <div class="team-info">
+            <h4 class="team-name">Dr. Anita Sharma</h4>
+            <div class="team-role">Founder & Pediatrician</div>
+            <p class="team-bio">Spearheads pediatric medical camps and mobile clinic operations. Coordinated 5,000+ critical surgeries.</p>
+          </div>
+        </div>
+        <!-- Team 2 -->
+        <div class="glass-card team-card">
+          <img src="images/avatar_elena.webp" alt="Elena Rostova" class="team-photo"/>
+          <div class="team-info">
+            <h4 class="team-name">Elena Rostova</h4>
+            <div class="team-role">Director of Education</div>
+            <p class="team-bio">Former child psychologist. Designs digital classrooms, curricula, and tablet tutoring programs.</p>
+          </div>
+        </div>
+        <!-- Team 3 -->
+        <div class="glass-card team-card">
+          <img src="images/avatar_devendra.webp" alt="Devendra Prasad" class="team-photo"/>
+          <div class="team-info">
+            <h4 class="team-name">Devendra Prasad</h4>
+            <div class="team-role">Chief of Water Tech</div>
+            <p class="team-bio">Renewable energy specialist. Manages installation of solar water filtration micro-plants.</p>
+          </div>
+        </div>
+        <!-- Team 4 -->
+        <div class="glass-card team-card">
+          <img src="images/avatar_maya.webp" alt="Maya Lin" class="team-photo"/>
+          <div class="team-info">
+            <h4 class="team-name">Maya Lin</h4>
+            <div class="team-role">Director of Nutrition</div>
+            <p class="team-bio">Food safety auditor. Coordinates supply chains for ZeroHunger kitchen hubs worldwide.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo">
+                            <a
+                                href="index.html"
+                                class="nav-logo"
+                                style="font-size: 1.2rem"
+                            >
+                                <img
+                                    src="images/logo.webp"
+                                    alt="Stackly Global Logo"
+                                />
+                            </a>
+                        </div>
+                        <p class="footer-desc">
+                            A transparent metrics-driven humanitarian platform
+                            mapping donations directly to local healthcare,
+                            nutrition, and schooling outcomes — verified in
+                            real-time.
+                        </p>
+                        <div class="footer-socials">
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Facebook"
+                                ><i class="fab fa-facebook-f"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Instagram"
+                                ><i class="fab fa-instagram"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Twitter X"
+                                ><i class="fab fa-x-twitter"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="LinkedIn"
+                                ><i class="fab fa-linkedin-in"></i
+                            ></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Navigation</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="index.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Home</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> Our
+                                    Programs</a
+                                >
+                            </li>
+                            <li>
+                                <a href="volunteer.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Volunteers</a
+                                >
+                            </li>
+                            <li>
+                                <a href="about.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> About
+                                    Us</a
+                                >
+                            </li>
+                            <li>
+                                <a href="contact.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Contact</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Focus Areas</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="programs.html?filter=education" class="footer-link"><i class="fas fa-chevron-right"></i> Digital Schooling</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=healthcare" class="footer-link"><i class="fas fa-chevron-right"></i> Pediatric Care</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=water" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> Clean
+                                    Water Plants</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=hunger" class="footer-link"><i class="fas fa-chevron-right"></i> Nutrition Hubs</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=environment" class="footer-link"><i class="fas fa-chevron-right"></i> Agroforestry</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Contact Us</h4>
+                        <ul
+                            class="footer-links"
+                            style="
+                                display: flex;
+                                flex-direction: column;
+                                gap: 14px;
+                                font-size: 0.85rem;
+                                color: var(--text-sec);
+                                line-height: 1.6;
+                            "
+                        >
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: flex-start;
+                                "
+                            >
+                                <i
+                                    class="fas fa-map-marker-alt"
+                                    style="
+                                        color: var(--primary);
+                                        margin-top: 4px;
+                                    "
+                                ></i>
+                                <span
+                                    >MMR Complex, Chinna Thirupathi, Salem,
+                                    Tamil Nadu 636008</span
+                                >
+                            </li>
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                "
+                            >
+                                <i
+                                    class="fas fa-phone-alt"
+                                    style="color: var(--primary)"
+                                ></i>
+                                <a
+                                    href="tel:+919876543210"
+                                    style="
+                                        color: var(--text-sec);
+                                        transition: color var(--transition-fast);
+                                    "
+                                    >+91 98765 43210</a
+                                >
+                            </li>
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                "
+                            >
+                                <i
+                                    class="fas fa-envelope"
+                                    style="color: var(--primary)"
+                                ></i>
+                                <a
+                                    href="mailto:support@stackly.org"
+                                    style="
+                                        color: var(--text-sec);
+                                        transition: color var(--transition-fast);
+                                    "
+                                    >support@stackly.org</a
+                                >
+                            </li>
+                        </ul>
+                        <div
+                            style="
+                                margin-top: 24px;
+                                padding-top: 24px;
+                                border-top: 1px solid var(--border);
+                            "
+                        >
+                            <a
+                                href="portal.html"
+                                class="btn btn-ghost btn-sm"
+                                style="width: 100%; justify-content: center"
+                                ><i class="fas fa-satellite-dish"></i> Access
+                                StackPortal</a
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <div>
+                        &copy; 2026 Stackly Global Foundation. All rights
+                        reserved. Registered 501(c)(3) nonprofit.
+                    </div>
+                    <div class="footer-bottom-links">
+                        <a href="404.html" class="footer-bottom-link"
+                            >Privacy Policy</a
+                        >
+                        <a href="404.html" class="footer-bottom-link"
+                            >Terms of Service</a
+                        >
+                        <a href="404.html" class="footer-bottom-link">Audit Reports</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+  <!-- Custom Script -->
+  <script src="js/main.js?v=1"></script>
+</body>
+</html>

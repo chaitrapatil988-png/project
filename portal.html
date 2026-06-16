@@ -1,0 +1,564 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StackPortal — Stackly Global Members Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>"/>
+  
+  <!-- Vendor Stylesheets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/portal.css"/>
+
+  <!-- Route Protection -->
+  <script>
+    if (localStorage.getItem('careportal_logged_in') !== 'true') {
+      window.location.replace('login.html');
+    }
+  </script>
+</head>
+<body>
+  <!-- Glowing Background Orbs -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/logo.webp" alt="Stackly Logo" class="loader-logo-img"/>
+  </div>
+
+  <!-- Mobile Header Hamburger -->
+  <div class="sidebar-hamburger">
+    <a href="index.html" class="sidebar-hamburger-logo">
+      <img src="images/logo.webp" alt="Stackly Logo" style="height:50px; width:auto; object-fit:contain; border-radius:50%; filter:hue-rotate(150deg) saturate(1.5);"/>
+    </a>
+    <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle Navigation Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div class="portal-layout">
+
+    <!-- ════ SIDEBAR ════ -->
+    <aside class="portal-sidebar" id="portalSidebar">
+      <div class="portal-sidebar-logo">
+        <a href="index.html" class="nav-logo" style="font-size:1.1rem; gap:10px;">
+          <img src="images/logo.webp" alt="Stackly Global Logo"/>
+          
+        </a>
+      </div>
+
+      <nav class="sidebar-menu">
+        <div class="sidebar-item active" data-tab="overview">
+          <i class="fas fa-chart-pie"></i> Overview
+        </div>
+        <div class="sidebar-item" data-tab="telemetry" id="telemetryTabMenu">
+          <i class="fas fa-satellite-dish"></i> Live Telemetry
+        </div>
+        <div class="sidebar-item" data-tab="volunteer">
+          <i class="fas fa-hands-holding"></i> Volunteer Squad
+        </div>
+        <div class="sidebar-item" data-tab="audits">
+          <i class="fas fa-file-invoice-dollar"></i> Audit & 80G
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-summary">
+          <img src="images/avatar_kavya.webp" alt="User Avatar" class="user-avatar" id="userAvatarImg" style="width:38px; height:38px; border-radius:50%; object-fit:cover; border:2px solid var(--primary); flex-shrink:0;"/>
+          <div class="user-info-text">
+            <div class="user-name" id="profileName">Guest Donor</div>
+            <div class="user-role" id="profileRole">Supporter</div>
+          </div>
+        </div>
+        <button class="sidebar-item" id="portalSignOut" style="width:100%; border:1px solid rgba(239, 68, 68, 0.15); color:var(--red); background:rgba(239, 68, 68, 0.02);">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- ════ MAIN CONTENT PANEL ════ -->
+    <main class="portal-main">
+
+      <!-- Top Navigation Actions -->
+      <div style="display:flex; justify-content:flex-end; gap:16px; font-family:var(--font-display); margin-bottom:20px; align-items:center; flex-wrap:wrap;">
+        <a href="#" onclick="if(document.referrer){history.back()}else{location.href='index.html'}; return false;" style="font-size:0.75rem; font-weight:700; color:var(--text-sec); text-transform:uppercase; letter-spacing:1px; display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.02); border:1px solid var(--border); padding:8px 16px; border-radius:var(--radius-full); transition:all 0.2s; text-decoration:none;">
+          <i class="fas fa-arrow-left" style="color:var(--primary);"></i> Go Back
+        </a>
+        <button id="portalTopLogoutBtn" style="font-size:0.75rem; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:1px; display:flex; align-items:center; gap:8px; background:rgba(239, 68, 68, 0.05); border:1px solid rgba(239, 68, 68, 0.2); padding:8px 16px; border-radius:var(--radius-full); transition:all 0.2s; cursor:pointer;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+
+      <!-- ── Dashboard Header ── -->
+      <div class="portal-welcome-banner">
+        <div class="welcome-banner-glow"></div>
+        <div class="welcome-banner-content" style="display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap;">
+          <div class="welcome-text" style="flex:1; min-width:300px;">
+            <h2>Welcome back, <span id="bannerUser">Friend</span>!</h2>
+            <p>You are accessing the Stackly secure telemetry portal. Real-time updates on your sponsored village water stations, school attendance rosters, and daily kitchen stock quantities are shown below.</p>
+            <div class="welcome-date" id="welcomeDate"></div>
+          </div>
+          <div class="welcome-banner-avatar-wrap" style="position:relative; width:90px; height:90px; flex-shrink:0; margin-right:10px;">
+            <img src="images/avatar_kavya.webp" alt="User Avatar" id="bannerAvatarImg" style="width:90px; height:90px; border-radius:50%; object-fit:cover; border:3px solid var(--primary); box-shadow: 0 0 20px rgba(249, 115, 22,0.4);"/>
+            <div class="banner-avatar-status" style="position:absolute; bottom:-2px; right:-2px; width:26px; height:26px; border-radius:50%; background:#10B981; border:3px solid #0B101D; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.7rem;" title="Secure Session Active">
+              <i class="fas fa-shield-halved"></i>
+            </div>
+          </div>
+          <div class="welcome-quick-actions" style="width:100%;">
+            <a href="404.html" class="quick-action-chip">
+              <i class="fas fa-bolt"></i> Quick Donate
+            </a>
+            <a href="#" class="quick-action-chip" data-tab="audits" onclick="document.querySelector('[data-tab=audits]').click(); return false;">
+              <i class="fas fa-shield-halved"></i> View Audits
+            </a>
+            <a href="#" class="quick-action-chip" data-tab="telemetry" onclick="document.querySelector('[data-tab=telemetry]').click(); return false;">
+              <i class="fas fa-satellite-dish"></i> Track Hash
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: OVERVIEW ── -->
+      <div class="portal-tab-content active" id="tab-overview">
+        
+        <!-- Summary Stats Grid -->
+        <div class="portal-stats-grid">
+          <div class="glass-card stat-glow-card primary">
+            <div class="stat-glow-card-header">
+              <span>Water Dispensed</span>
+              <i class="fas fa-droplet"></i>
+            </div>
+            <div class="stat-glow-card-val" id="stat-water">14,240 Liters</div>
+            <div class="stat-glow-card-desc">Sourced through your sponsored filters.</div>
+          </div>
+
+          <div class="glass-card stat-glow-card secondary">
+            <div class="stat-glow-card-header">
+              <span>Schooling Weeks</span>
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="stat-glow-card-val" id="stat-school">12 Weeks</div>
+            <div class="stat-glow-card-desc">Providing STEM training & tablet learning.</div>
+          </div>
+
+          <div class="glass-card stat-glow-card accent">
+            <div class="stat-glow-card-header">
+              <span>Meals Cooked</span>
+              <i class="fas fa-bowl-rice"></i>
+            </div>
+            <div class="stat-glow-card-val" id="stat-meals">320 Meals</div>
+            <div class="stat-glow-card-desc">High-nutrition lunches served to kids.</div>
+          </div>
+
+          <div class="glass-card stat-glow-card red">
+            <div class="stat-glow-card-header">
+              <span>Current Squad Assignment</span>
+              <i class="fas fa-hands-holding"></i>
+            </div>
+            <div class="stat-glow-card-val" id="stat-squad" style="font-size:1.1rem; padding-top:4px;">No Active Shift</div>
+            <div class="stat-glow-card-desc" id="stat-squad-desc">Register on the Volunteer tab.</div>
+          </div>
+        </div>
+        <!-- ── Member Role & Privileges Workspace ── -->
+        <div class="glass-card role-workspace-card" style="padding:30px; margin-bottom:30px;">
+          <div class="role-workspace-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:18px; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="role-icon-badge" id="roleIconBadge" style="width:48px; height:48px; border-radius:12px; background:rgba(249, 115, 22,0.1); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:1.3rem;">
+                <i class="fas fa-shield-halved"></i>
+              </div>
+              <div>
+                <h3 style="font-family:var(--font-display); font-size:1.15rem; font-weight:850; color:#fff; margin:0;">Stackly Identity & Privilege Matrix</h3>
+                <p style="color:var(--text-sec); font-size:0.8rem; margin:4px 0 0 0;">Dynamic security cleared node for role-based configuration & resource telemetry access.</p>
+              </div>
+            </div>
+            <div class="role-status-badge" id="roleStatusBadge" style="padding:6px 14px; border-radius:var(--radius-full); font-size:0.75rem; font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:1px; background:rgba(16,185,129,0.1); color:#10B981; border:1px solid rgba(16,185,129,0.2);">
+              Active Donor
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;" class="role-workspace-grid">
+            <!-- Left Panel: Role Details & Clearances -->
+            <div class="role-info-panel" style="display:flex; flex-direction:column; gap:20px;">
+              <div>
+                <h4 style="font-family:var(--font-display); font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">Authorized Clearances & Actions</h4>
+                <div class="clearance-list" id="roleClearanceList" style="display:flex; flex-direction:column; gap:10px;">
+                  <!-- Dynamically populated based on role -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Panel: Role Badges / Missions -->
+            <div class="role-missions-panel" style="border-left:1px solid var(--border); padding-left:30px; display:flex; flex-direction:column; gap:20px;" id="roleMissionsPanel">
+              <div>
+                <h4 style="font-family:var(--font-display); font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">Active Role Milestone</h4>
+                <div id="roleMilestoneContent">
+                  <!-- Dynamically populated based on role -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:30px;" class="split-layout">
+          <!-- Outpost Feed Log -->
+          <div class="glass-card" style="padding:30px;">
+            <h3 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:20px; color:#fff;"><i class="fas fa-satellite" style="color:var(--primary); margin-right:10px;"></i> Telemetry Outpost Dispatch Logs</h3>
+            <div style="display:flex; flex-direction:column; gap:16px;" id="dispatchLogs">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Quick Action panel -->
+          <div class="glass-card" style="padding:0; overflow:hidden; text-align:center; display:flex; flex-direction:column;">
+            <div style="width:100%; height:140px; position:relative; overflow:hidden; border-bottom:1px solid var(--border);">
+              <img src="images/community_uplift.webp" alt="Sponsor Outpost" style="width:100%; height:100%; object-fit:cover; filter: brightness(0.8);"/>
+              <div style="position:absolute; top:12px; right:12px; width:34px; height:34px; border-radius:50%; background:rgba(9, 13, 22, 0.7); backdrop-filter:blur(4px); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:0.95rem; border:1px solid var(--border);">
+                <i class="fas fa-heart"></i>
+              </div>
+            </div>
+            <div style="padding:24px 30px 30px 30px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h4 style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:#fff; margin-bottom:10px;">Sponsor Another Outpost</h4>
+            <p style="color:var(--text-sec); font-size:0.85rem; line-height:1.6; margin-bottom:24px;">Support mobile clinics, water filtration setups, or tribal education camps. Get new audit hash telemetry keys immediately.</p>
+            <a href="404.html" class="btn btn-primary btn-sm" style="width:100%; justify-content:center;">Deploy New Contribution</a>
+          </div>
+        </div>
+        </div>
+        <!-- Impact Highlights Row -->
+        <div class="impact-highlights-row">
+          <div class="glass-card impact-highlight-card">
+            <div class="impact-icon" style="background: rgba(249, 115, 22, 0.12); color: var(--primary);">
+              <i class="fas fa-map-location-dot"></i>
+            </div>
+            <div class="impact-data">
+              <div class="impact-number">4</div>
+              <div class="impact-label">Active Outposts</div>
+            </div>
+          </div>
+          <div class="glass-card impact-highlight-card">
+            <div class="impact-icon" style="background: rgba(6, 182, 212, 0.12); color: var(--secondary);">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="impact-data">
+              <div class="impact-number">2,847</div>
+              <div class="impact-label">Lives Impacted</div>
+            </div>
+          </div>
+          <div class="glass-card impact-highlight-card">
+            <div class="impact-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <div class="impact-data">
+              <div class="impact-number">94.2%</div>
+              <div class="impact-label">Direct Aid Rate</div>
+            </div>
+          </div>
+          <div class="glass-card impact-highlight-card">
+            <div class="impact-icon" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="impact-data">
+              <div class="impact-number">A+</div>
+              <div class="impact-label">Audit Rating</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Timeline -->
+        <div class="glass-card" style="padding: 30px; margin-top: 30px;">
+          <h3 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:20px; color:#fff;"><i class="fas fa-timeline" style="color:var(--secondary); margin-right:10px;"></i> Your Activity Timeline</h3>
+          <div class="activity-timeline" id="activityTimeline">
+            <div class="activity-item">
+              <div class="activity-dot" style="background: var(--primary);"></div>
+              <div class="activity-content">
+                <div class="activity-title">Portal Session Started</div>
+                <div class="activity-desc">You logged into the StackPortal telemetry system securely.</div>
+                <div class="activity-time">Just now</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background: var(--secondary);"></div>
+              <div class="activity-content">
+                <div class="activity-title">Jodhpur Outpost #4 Synced</div>
+                <div class="activity-desc">Water filtration telemetry data refreshed. All sensors operational. pH stable at 7.2.</div>
+                <div class="activity-time">3 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background: #10B981;"></div>
+              <div class="activity-content">
+                <div class="activity-title">Monthly Audit Report Generated</div>
+                <div class="activity-desc">Section 80G compliance document auto-generated for the current fiscal quarter.</div>
+                <div class="activity-time">2 hours ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background: #F59E0B;"></div>
+              <div class="activity-content">
+                <div class="activity-title">Kitchen Hub #3 Restocked</div>
+                <div class="activity-desc">Grain supply replenished to 820 kg. Vendor invoice verified and signed.</div>
+                <div class="activity-time">Yesterday, 4:30 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── TAB: LIVE TELEMETRY ── -->
+      <div class="portal-tab-content" id="tab-telemetry">
+        
+        <!-- Selection Box -->
+        <div class="glass-card telemetry-selector-box">
+          <div>
+            <h4 style="font-family:var(--font-display); font-size:0.95rem; font-weight:800; color:#fff; margin-bottom:6px; text-transform:uppercase; letter-spacing:1.5px;">Search Donation Telemetry</h4>
+            <p style="color:var(--text-sec); font-size:0.82rem;">Enter your custom donation tracking hash or load a demonstration outpost below.</p>
+            
+            <div class="hash-presets">
+              <button class="hash-preset-btn active" data-hash="st_wat_rajas">Jodhpur Water Station</button>
+              <button class="hash-preset-btn" data-hash="st_edu_odisha">Odisha Classroom</button>
+              <button class="hash-preset-btn" data-hash="st_hun_slums">Mumbai Kitchen Hub</button>
+              <button class="hash-preset-btn" data-hash="st_med_camp">Pediatric Surgical Camp</button>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; justify-content:center;">
+            <form id="hashSearchForm" class="hash-search-group" onsubmit="window.location.href='404.html'; return false;">
+              <input type="text" id="hashSearchInput" class="form-input" placeholder="e.g. st_don_f8c2a9" required style="font-family:var(--font-display); font-size:0.85rem; letter-spacing:1px;"/>
+              <button type="submit" class="btn btn-primary btn-sm" style="margin-left:8px !important; border-radius: var(--radius-sm);"><i class="fas fa-search"></i> Inspect</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Displays Telemetry Data -->
+        <div class="telemetry-display-panel">
+          
+          <!-- Visualizer Card (Left) -->
+          <div class="glass-card telemetry-visual-card" id="telemetryVisualCard">
+            <!-- Dynamically populated based on active preset -->
+          </div>
+
+          <!-- Metadata Info Card (Right) -->
+          <div class="glass-card telemetry-meta-card" id="telemetryMetaCard">
+            <!-- Dynamically populated -->
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ── TAB: VOLUNTEER SQUAD ── -->
+      <div class="portal-tab-content" id="tab-volunteer">
+        
+        <div class="volunteer-dashboard-layout">
+          
+          <!-- Left side: Squad info & shift registry -->
+          <div class="hours-logger-panel">
+            <div class="glass-card" style="padding:30px;">
+              <h3 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:12px;"><i class="fas fa-id-badge" style="color:var(--primary); margin-right:10px;"></i> Active field squad card</h3>
+              
+              <div id="volunteerStatusPanel">
+                <!-- If volunteer registration exists -->
+              </div>
+            </div>
+
+            <!-- Logger Form -->
+            <div class="glass-card" style="padding:30px;" id="hoursLoggerCard">
+              <h3 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:12px;"><i class="fas fa-stopwatch" style="color:var(--secondary); margin-right:10px;"></i> Log field service hours</h3>
+              <p style="color:var(--text-sec); font-size:0.88rem; margin-bottom:20px;">Participated in an outpost assignment? Log your hours below to update your service token ledger.</p>
+              
+              <form id="logHoursForm" class="auth-form" style="gap:16px;" onsubmit="window.location.href='404.html'; return false;">
+                <div class="form-group">
+                  <label class="form-label">Hours Served</label>
+                  <input type="number" id="logHoursInput" class="form-input" placeholder="e.g. 4" min="1" max="24" required/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Activity Description</label>
+                  <input type="text" id="logActivityInput" class="form-input" placeholder="e.g. STEM Tablet Tutoring Session" required/>
+                </div>
+                <button type="submit" class="btn btn-cyan btn-sm" style="justify-content:center;"><i class="fas fa-check"></i> Register Service Hours</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right side: Shifts Scheduled -->
+          <div class="glass-card" style="padding:30px;">
+            <h3 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:12px;"><i class="fas fa-calendar-alt" style="color:var(--accent); margin-right:10px;"></i> Upcoming Deployment Shifts</h3>
+            <p style="color:var(--text-sec); font-size:0.85rem; margin-bottom:20px;">Confirm your attendance details with your district squad lead.</p>
+            
+            <div class="volunteer-schedule-list" id="shiftScheduleList">
+              <!-- Filled dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ── TAB: AUDITS & RECEIPT ── -->
+      <div class="portal-tab-content" id="tab-audits">
+        
+        <div class="audit-layout">
+          
+          <!-- Left side: Receipt Certificate Mockup -->
+          <div class="receipt-certificate-mockup" id="receiptMockup">
+            <div class="receipt-seal">
+              <span>AUDIT</span>
+              <span style="font-weight:900; color:var(--primary); font-size:0.6rem; letter-spacing:0.5px;">VERIFIED</span>
+              
+            </div>
+
+            <div class="receipt-header">
+              <div class="receipt-title">Certificate of exemption</div>
+              <div class="receipt-sub">Section 80G Income Tax Act</div>
+            </div>
+
+            <div class="receipt-body">
+              <div class="receipt-row">
+                <span class="receipt-label">Organization:</span>
+                <span class="receipt-value">Stackly Global Foundation</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Reg. Status:</span>
+                <span class="receipt-value">501(c)(3) / 80G Certified</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Donor Name:</span>
+                <span class="receipt-value" id="receiptDonorName">Srikant Roy</span>
+              </div>
+              <div class="receipt-row" style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="receipt-label">Receipt Hash:</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="receipt-value" id="receiptHashVal" style="font-family:var(--font-display); font-size:0.75rem; color:var(--primary); margin:0;">st_wat_rajas</span>
+                  <button id="inspectReceiptHashBtn" style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:4px; color:var(--primary); cursor:pointer; font-size:0.68rem; padding:2px 6px; display:inline-flex; align-items:center; gap:4px; transition:all 0.2s;" title="Inspect in Live Telemetry">
+                    <i class="fas fa-search"></i> Inspect
+                  </button>
+                </div>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Contribution Stream:</span>
+                <span class="receipt-value" id="receiptAmount">₹1,500 / Monthly</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Allocation:</span>
+                <span class="receipt-value" id="receiptAlloc">Clean Water Stations</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Date Issued:</span>
+                <span class="receipt-value" id="receiptDate">11-Jun-2026</span>
+              </div>
+            </div>
+
+            <div style="text-align:center;">
+              <button id="downloadReceiptBtn" class="btn btn-primary btn-sm" onclick="window.location.href='404.html'"><i class="fas fa-file-pdf"></i> Download Tax Receipt</button>
+            </div>
+          </div>
+
+          <!-- Right side: Financial Audits Registry -->
+          <div class="glass-card" style="padding:30px;">
+            <h3 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:12px;"><i class="fas fa-shield-halved" style="color:var(--primary); margin-right:10px;"></i> Annual Audit ledger</h3>
+            <p style="color:var(--text-sec); font-size:0.85rem; line-height:1.6; margin-bottom:24px;">Stackly operates under strict double-entry cryptographic audits. We maintain a public registry mapping donations to operational resource distributions.</p>
+            
+            <div class="table-responsive">
+              <table class="students-table">
+                <thead>
+                  <tr>
+                    <th>Audit Period</th>
+                    <th>Total Funds</th>
+                    <th>Direct Aid %</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>FY 2025-2026</td>
+                    <td>₹8.4 Crores</td>
+                    <td>94.2%</td>
+                    <td><span style="color:var(--accent); font-weight:700;"><i class="fas fa-check-circle"></i> Vetted</span></td>
+                  </tr>
+                  <tr>
+                    <td>FY 2024-2025</td>
+                    <td>₹6.1 Crores</td>
+                    <td>94.1%</td>
+                    <td><span style="color:var(--accent); font-weight:700;"><i class="fas fa-check-circle"></i> Vetted</span></td>
+                  </tr>
+                  <tr>
+                    <td>FY 2023-2024</td>
+                    <td>₹4.8 Crores</td>
+                    <td>93.8%</td>
+                    <td><span style="color:var(--accent); font-weight:700;"><i class="fas fa-check-circle"></i> Vetted</span></td>
+                  </tr>
+                  <tr>
+                    <td>FY 2022-2023</td>
+                    <td>₹3.2 Crores</td>
+                    <td>93.5%</td>
+                    <td><span style="color:var(--accent); font-weight:700;"><i class="fas fa-check-circle"></i> Vetted</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Custom Scripts -->
+  <script src="js/main.js?v=1"></script>
+  
+  <!-- Local Telemetry & Dashboard Engine -->
+  <script>
+    // Tab Controller
+    const sidebarItems = document.querySelectorAll('.sidebar-item[data-tab]');
+    const tabContents = document.querySelectorAll('.portal-tab-content');
+    
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', () => {
+        sidebarItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        
+        const targetTab = item.getAttribute('data-tab');
+        tabContents.forEach(content => {
+          content.classList.remove('active');
+          if (content.id === `tab-${targetTab}`) {
+            content.classList.add('active');
+          }
+        });
+        
+        // Auto-close sidebar on mobile
+        document.getElementById('portalSidebar').classList.remove('open');
+      });
+    });
+
+    // Mobile Navigation Toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const portalSidebar = document.getElementById('portalSidebar');
+    if (sidebarToggle && portalSidebar) {
+      sidebarToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        portalSidebar.classList.toggle('open');
+      });
+      document.addEventListener('click', (e) => {
+        if (!portalSidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+          portalSidebar.classList.remove('open');
+        }
+      });
+    }
+
+    // Set Welcome Date
+    const welcomeDateEl = document.getElementById('welcomeDate');
+    if (welcomeDateEl) {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      welcomeDateEl.innerHTML = '<i class="fas fa-calendar-alt" style="margin-right:6px;"></i>' + now.toLocaleDateString('en-IN', options);
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donate — Stackly Global</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>"/>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  
+  <style>
+    /* ─── DONATION SPECIFIC STYLES ─── */
+    .donate-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: start; }
+    .donate-form-card { padding: 40px; min-height: 650px; }
+    
+    /* Step indicators */
+    .step-indicator { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; position: relative; }
+    .step-dot {
+      width: 38px; height: 38px; border-radius: 50%; background: rgba(255, 255, 255, 0.03);
+      border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--text-sec);
+      position: relative; z-index: 5; transition: all 0.3s;
+    }
+    .step-dot.active { background: var(--primary); border-color: var(--primary); color: #090D16; box-shadow: var(--shadow-blue); }
+    .step-line { flex: 1; height: 2px; background: var(--border); position: relative; z-index: 1; margin: 0 -2px; transition: all 0.3s; }
+    .step-line.active { background: var(--primary); }
+
+    /* Step content visibility */
+    .donate-step { display: none; }
+    .donate-step.active { display: flex; flex-direction: column; }
+
+    /* Frequency & Amount Selectors */
+    .freq-btn.active { background: var(--primary) !important; color: #090D16 !important; border-color: var(--primary) !important; box-shadow: var(--shadow-blue); }
+    
+    .amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .amount-btn {
+      padding: 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+      background: rgba(255, 255, 255, 0.02); color: #fff; font-family: var(--font-display);
+      font-weight: 700; font-size: 0.98rem; text-align: center; cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .amount-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .amount-btn.active { background: var(--primary); color: #090D16; border-color: var(--primary); box-shadow: var(--shadow-blue); }
+
+    /* Allocation Radios */
+    .alloc-card {
+      display: flex; align-items: center; gap: 16px; padding: 18px 24px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: rgba(255,255,255,0.01); margin-bottom: 12px; cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .alloc-card:hover { border-color: rgba(249, 115, 22, 0.2); background: rgba(255, 255, 255, 0.03); }
+    .alloc-card input[type="radio"] { accent-color: var(--primary); width: 18px; height: 18px; cursor: pointer; }
+    .alloc-icon { font-size: 1.3rem; color: var(--primary); width: 28px; }
+    .alloc-body { flex: 1; }
+    .alloc-title { font-family: var(--font-body); font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .alloc-desc { font-size: 0.78rem; color: var(--text-sec); }
+
+    /* Summary Sidebar */
+    .summary-card { padding: 36px 28px; border-color: rgba(249, 115, 22, 0.25); }
+    .summary-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 20px; text-transform: uppercase; color: #fff; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 16px; }
+    .summary-label { color: var(--text-sec); }
+    .summary-val { font-weight: 600; color: #fff; }
+    
+    .wizard-btns { display: flex; gap: 14px; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 24px; }
+    .wizard-btns .btn { flex: 1; justify-content: center; }
+
+    @media(max-width: 900px) {
+      .donate-layout { grid-template-columns: 1fr; }
+      .amount-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width: 600px) {
+      .donate-form-card { padding: 24px; min-height: auto; }
+      .summary-card { padding: 24px 20px; }
+    }
+    @media(max-width: 500px) {
+      .amount-grid { grid-template-columns: 1fr; }
+      .wizard-btns { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/logo.webp" alt="Stackly Logo" class="loader-logo-img"/>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.webp" alt="Stackly Global Logo"/>
+        
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="programs.html" class="nav-link">Our Programs</a></li>
+        <li><a href="volunteer.html" class="nav-link">Volunteers</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline btn-sm"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="donate.html" class="btn btn-primary btn-sm btn-pulse"><i class="fas fa-heart"></i> Donate Now</a>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Open Navigation">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Dropdown Nav -->
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="programs.html" class="nav-link">Our Programs</a>
+    <a href="volunteer.html" class="nav-link">Volunteers</a>
+    <a href="about.html" class="nav-link">About Us</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+      <a href="login.html" class="btn btn-outline w-full" style="justify-content:center;"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a href="donate.html" class="btn btn-primary w-full" style="justify-content:center;"><i class="fas fa-heart"></i> Donate Now</a>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-bg" style="background-image:url('images/medical_hero.webp')"></div>
+    <div class="page-header-overlay" style="background: linear-gradient(180deg, rgba(9, 13, 22, 0.6) 0%, var(--bg) 100%);"></div>
+    <div class="page-header-content container">
+      <div class="breadcrumb"><a href="index.html">Home</a><i class="fas fa-chevron-right"></i><span>Donate</span></div>
+      <h1>Make a Donation</h1>
+      <p>Fund critical grids of humanitarian care. 94% of all donations directly finance local village outposts.</p>
+    </div>
+  </div>
+
+  <!-- Donation Portal Wizard -->
+  <section class="section">
+    <div class="container">
+      <div class="donate-layout">
+
+        <!-- Wizard -->
+        <div class="glass-card donate-form-card">
+          <!-- Step Indicator -->
+          <div class="step-indicator">
+            <div class="step-dot active" id="sdot1">1</div>
+            <div class="step-line" id="sline1"></div>
+            <div class="step-dot" id="sdot2">2</div>
+            <div class="step-line" id="sline2"></div>
+            <div class="step-dot" id="sdot3">3</div>
+            <div class="step-line" id="sline3"></div>
+            <div class="step-dot" id="sdot4">4</div>
+          </div>
+
+          <!-- STEP 1: Amount & Frequency -->
+          <div class="donate-step active" id="step1">
+            <h3 style="font-family:var(--font-display); font-size:1.2rem; font-weight:800; margin-bottom:8px; color:#fff;">Choose Donation Amount</h3>
+            <p style="color:var(--text-sec); font-size:0.9rem; margin-bottom:24px;">Fully audited telemetry: see exactly where food and schooling go.</p>
+            
+            <!-- Frequency -->
+            <div class="form-group" style="margin-bottom:24px;">
+              <label class="form-label">Donation Frequency</label>
+              <div style="display:flex; gap:10px;">
+                <button class="freq-btn active btn btn-primary btn-sm" data-freq="monthly"><i class="fas fa-rotate"></i> Monthly Sponsor</button>
+                <button class="freq-btn btn btn-outline btn-sm" data-freq="one-time"><i class="fas fa-circle-dot"></i> One-time Fund</button>
+              </div>
+            </div>
+
+            <!-- Predefined Amounts -->
+            <div class="form-group">
+              <label class="form-label">Select Amount</label>
+              <div class="amount-grid">
+                <button class="amount-btn" data-amount="500">₹500</button>
+                <button class="amount-btn active" data-amount="1500">₹1,500</button>
+                <button class="amount-btn" data-amount="3000">₹3,000</button>
+                <button class="amount-btn" data-amount="6000">₹6,000</button>
+                <button class="amount-btn" data-amount="12000">₹12,000</button>
+                <button class="amount-btn" data-amount="custom">Custom</button>
+              </div>
+              <input type="number" id="customAmount" class="form-input" placeholder="Enter custom amount in ₹" style="display:none; margin-top:10px;" min="10"/>
+            </div>
+
+            <div class="wizard-btns">
+              <button class="btn btn-primary wizard-next" data-next="step2">Next: Choose Program <i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Allocation -->
+          <div class="donate-step" id="step2">
+            <h3 style="font-family:var(--font-display); font-size:1.2rem; font-weight:800; margin-bottom:8px; color:#fff;">Select Program Allocation</h3>
+            <p style="color:var(--text-sec); font-size:0.9rem; margin-bottom:24px;">Direct where your contribution will deploy.</p>
+
+            <div class="form-group">
+              <!-- Radio 1 -->
+              <label class="alloc-card">
+                <input type="radio" name="project-select" value="all" checked/>
+                <div class="alloc-icon"><i class="fas fa-circle-nodes"></i></div>
+                <div class="alloc-body">
+                  <div class="alloc-title">Stackly Global Core Projects</div>
+                  <div class="alloc-desc">Distribute across classrooms, clinics, water micro-plants, and food hubs as per priority.</div>
+                </div>
+              </label>
+              <!-- Radio 2 -->
+              <label class="alloc-card">
+                <input type="radio" name="project-select" value="education"/>
+                <div class="alloc-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="alloc-body">
+                  <div class="alloc-title">Child Digital Classrooms</div>
+                  <div class="alloc-desc">Buying learning materials, tablets, solar grids, and training village teachers.</div>
+                </div>
+              </label>
+              <!-- Radio 3 -->
+              <label class="alloc-card">
+                <input type="radio" name="project-select" value="medical"/>
+                <div class="alloc-icon"><i class="fas fa-stethoscope"></i></div>
+                <div class="alloc-body">
+                  <div class="alloc-title">Pediatric Critical Surgeries</div>
+                  <div class="alloc-desc">Funding clinical operations, cleft surgeries, and stocking mobile medical camp vans.</div>
+                </div>
+              </label>
+              <!-- Radio 4 -->
+              <label class="alloc-card">
+                <input type="radio" name="project-select" value="water"/>
+                <div class="alloc-icon"><i class="fas fa-droplet"></i></div>
+                <div class="alloc-body">
+                  <div class="alloc-title">Clean Water Micro-Plants</div>
+                  <div class="alloc-desc">Installing village reverse osmosis filters to remove arsenic and lead from groundwater.</div>
+                </div>
+              </label>
+            </div>
+
+            <div class="wizard-btns">
+              <button class="btn btn-ghost wizard-prev" data-prev="step1"><i class="fas fa-chevron-left"></i> Back</button>
+              <button class="btn btn-primary wizard-next" data-next="step3">Next: Donor Details <i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Contact Info -->
+          <div class="donate-step" id="step3">
+            <h3 style="font-family:var(--font-display); font-size:1.2rem; font-weight:800; margin-bottom:8px; color:#fff;">Donor Verification</h3>
+            <p style="color:var(--text-sec); font-size:0.9rem; margin-bottom:24px;">Receipts and audit keys will target this email.</p>
+
+            <div class="form-group" style="margin-bottom:16px;">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="donorName" class="form-input" placeholder="e.g. Srikant Roy" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="donorEmail" class="form-input" placeholder="e.g. srikant@example.com" required/>
+            </div>
+
+            <div class="wizard-btns">
+              <button class="btn btn-ghost wizard-prev" data-prev="step2"><i class="fas fa-chevron-left"></i> Back</button>
+              <button class="btn btn-primary wizard-next" data-next="step4">Next: Payment <i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 4: Payment Details -->
+          <div class="donate-step" id="step4">
+            <h3 style="font-family:var(--font-display); font-size:1.2rem; font-weight:800; margin-bottom:8px; color:#fff;">Secure Transaction Portal</h3>
+            <p style="color:var(--text-sec); font-size:0.9rem; margin-bottom:24px;">Verified SSL Encryption. Contributed amount: <strong style="color:var(--primary);" id="conf-amt">₹1,500</strong></p>
+
+            <div id="conf-details" style="background:rgba(255, 255, 255, 0.02); border:1px solid var(--border); padding:16px; border-radius:var(--radius); font-size:0.85rem; line-height:1.6; margin-bottom:24px; color:var(--text-sec);">
+              <!-- Filled by JS -->
+            </div>
+
+            <form id="paymentForm" class="auth-form" style="gap:16px;">
+              <div class="form-group">
+                <label class="form-label">Credit Card Number</label>
+                <div class="form-input-group">
+                  <i class="fas fa-credit-card"></i>
+                  <input type="text" class="form-input" placeholder="4111 2222 3333 4444" required pattern="[0-9\s]{13,19}"/>
+                </div>
+              </div>
+              
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;" class="split-layout">
+                <div class="form-group">
+                  <label class="form-label">Expiry Date</label>
+                  <input type="text" class="form-input" placeholder="MM/YY" required pattern="[0-9]{2}/[0-9]{2}"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">CVV / CVN</label>
+                  <input type="password" class="form-input" placeholder="***" required pattern="[0-9]{3}"/>
+                </div>
+              </div>
+
+              <div class="wizard-btns">
+                <button type="button" class="btn btn-ghost wizard-prev" data-prev="step3"><i class="fas fa-chevron-left"></i> Back</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-heart"></i> Complete Donation</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Sidebar Summary -->
+        <div class="glass-card summary-card">
+          <h4 class="summary-title">Contribution Metrics</h4>
+          
+          <div class="summary-row">
+            <span class="summary-label">Donation Stream:</span>
+            <span class="summary-val" id="sum-value">₹1,500/month</span>
+          </div>
+          
+          <div style="margin-top:20px; border-top:1px dashed var(--border); padding-top:20px;">
+            <h5 style="font-family:var(--font-display); font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; color:var(--primary);"><i class="fas fa-satellite"></i> Expected Community Impact</h5>
+            <p id="sum-impact" style="font-size:0.88rem; color:var(--text-sec); line-height:1.7;">
+              <!-- Filled by JS -->
+            </p>
+          </div>
+
+          <div style="margin-top:24px; padding:18px; border-radius:var(--radius); background:var(--primary-light); border:1px solid rgba(249, 115, 22, 0.2); font-size:0.82rem; color:var(--primary); line-height:1.6;">
+            <i class="fas fa-circle-check" style="margin-right:6px;"></i> <strong>Section 80G Deductions:</strong> Contributions made to Stackly qualify for tax exemption records under Income Tax audits.
+          </div>
+
+          <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="color: var(--primary); font-size: 1.1rem; margin-top: 2px;"><i class="fas fa-shield-halved"></i></div>
+              <div>
+                <strong style="color: #fff; font-size: 0.85rem; display: block; margin-bottom: 3px;">Bank-Grade Encryption</strong>
+                <span style="color: var(--text-sec); font-size: 0.8rem; line-height: 1.4; display: block;">All payment pipelines use AES-256 bit encryption and are PCI-DSS compliant.</span>
+              </div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="color: var(--secondary); font-size: 1.1rem; margin-top: 2px;"><i class="fas fa-camera-retro"></i></div>
+              <div>
+                <strong style="color: #fff; font-size: 0.85rem; display: block; margin-bottom: 3px;">Live Telemetry Proof</strong>
+                <span style="color: var(--text-sec); font-size: 0.8rem; line-height: 1.4; display: block;">You'll receive photographic receipts from the field within 48 hours of allocation.</span>
+              </div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="color: var(--accent); font-size: 1.1rem; margin-top: 2px;"><i class="fas fa-hand-holding-dollar"></i></div>
+              <div>
+                <strong style="color: #fff; font-size: 0.85rem; display: block; margin-bottom: 3px;">Zero Overhead Fees</strong>
+                <span style="color: var(--text-sec); font-size: 0.8rem; line-height: 1.4; display: block;">Platform costs are privately funded. 100% of this amount goes to the actual outposts.</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="color: var(--primary); font-size: 1.1rem; margin-top: 2px;"><i class="fas fa-file-signature"></i></div>
+              <div>
+                <strong style="color: #fff; font-size: 0.85rem; display: block; margin-bottom: 3px;">Independent Auditing</strong>
+                <span style="color: var(--text-sec); font-size: 0.8rem; line-height: 1.4; display: block;">Our financials are audited quarterly by certified third-party accounting firms.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo">
+                            <a
+                                href="index.html"
+                                class="nav-logo"
+                                style="font-size: 1.2rem"
+                            >
+                                <img
+                                    src="images/logo.webp"
+                                    alt="Stackly Global Logo"
+                                />
+                            </a>
+                        </div>
+                        <p class="footer-desc">
+                            A transparent metrics-driven humanitarian platform
+                            mapping donations directly to local healthcare,
+                            nutrition, and schooling outcomes — verified in
+                            real-time.
+                        </p>
+                        <div class="footer-socials">
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Facebook"
+                                ><i class="fab fa-facebook-f"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Instagram"
+                                ><i class="fab fa-instagram"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="Twitter X"
+                                ><i class="fab fa-x-twitter"></i
+                            ></a>
+                            <a
+                                href="404.html"
+                                class="footer-social-btn"
+                                aria-label="LinkedIn"
+                                ><i class="fab fa-linkedin-in"></i
+                            ></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Navigation</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="index.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Home</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> Our
+                                    Programs</a
+                                >
+                            </li>
+                            <li>
+                                <a href="volunteer.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Volunteers</a
+                                >
+                            </li>
+                            <li>
+                                <a href="about.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> About
+                                    Us</a
+                                >
+                            </li>
+                            <li>
+                                <a href="contact.html" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i>
+                                    Contact</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Focus Areas</h4>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="programs.html?filter=education" class="footer-link"><i class="fas fa-chevron-right"></i> Digital Schooling</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=healthcare" class="footer-link"><i class="fas fa-chevron-right"></i> Pediatric Care</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=water" class="footer-link"
+                                    ><i class="fas fa-chevron-right"></i> Clean
+                                    Water Plants</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=hunger" class="footer-link"><i class="fas fa-chevron-right"></i> Nutrition Hubs</a
+                                >
+                            </li>
+                            <li>
+                                <a href="programs.html?filter=environment" class="footer-link"><i class="fas fa-chevron-right"></i> Agroforestry</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Contact Us</h4>
+                        <ul
+                            class="footer-links"
+                            style="
+                                display: flex;
+                                flex-direction: column;
+                                gap: 14px;
+                                font-size: 0.85rem;
+                                color: var(--text-sec);
+                                line-height: 1.6;
+                            "
+                        >
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: flex-start;
+                                "
+                            >
+                                <i
+                                    class="fas fa-map-marker-alt"
+                                    style="
+                                        color: var(--primary);
+                                        margin-top: 4px;
+                                    "
+                                ></i>
+                                <span
+                                    >MMR Complex, Chinna Thirupathi, Salem,
+                                    Tamil Nadu 636008</span
+                                >
+                            </li>
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                "
+                            >
+                                <i
+                                    class="fas fa-phone-alt"
+                                    style="color: var(--primary)"
+                                ></i>
+                                <a
+                                    href="tel:+919876543210"
+                                    style="
+                                        color: var(--text-sec);
+                                        transition: color var(--transition-fast);
+                                    "
+                                    >+91 98765 43210</a
+                                >
+                            </li>
+                            <li
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    align-items: center;
+                                "
+                            >
+                                <i
+                                    class="fas fa-envelope"
+                                    style="color: var(--primary)"
+                                ></i>
+                                <a
+                                    href="mailto:support@stackly.org"
+                                    style="
+                                        color: var(--text-sec);
+                                        transition: color var(--transition-fast);
+                                    "
+                                    >support@stackly.org</a
+                                >
+                            </li>
+                        </ul>
+                        <div
+                            style="
+                                margin-top: 24px;
+                                padding-top: 24px;
+                                border-top: 1px solid var(--border);
+                            "
+                        >
+                            <a
+                                href="portal.html"
+                                class="btn btn-ghost btn-sm"
+                                style="width: 100%; justify-content: center"
+                                ><i class="fas fa-satellite-dish"></i> Access
+                                StackPortal</a
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <div>
+                        &copy; 2026 Stackly Global Foundation. All rights
+                        reserved. Registered 501(c)(3) nonprofit.
+                    </div>
+                    <div class="footer-bottom-links">
+                        <a href="404.html" class="footer-bottom-link"
+                            >Privacy Policy</a
+                        >
+                        <a href="404.html" class="footer-bottom-link"
+                            >Terms of Service</a
+                        >
+                        <a href="404.html" class="footer-bottom-link">Audit Reports</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+  <!-- Custom Script -->
+  <script src="js/main.js?v=1"></script>
+</body>
+</html>
+

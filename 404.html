@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 Page Not Found — Stackly Global</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>"/>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  
+  <style>
+    .error-container {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: calc(100vh - 350px); text-align: center; padding: 80px 24px;
+      position: relative; z-index: 2;
+    }
+    .error-code {
+      font-family: var(--font-display); font-size: clamp(6rem, 15vw, 10rem); font-weight: 800;
+      line-height: 1; margin-bottom: 20px; letter-spacing: -2px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.2));
+    }
+    .error-title {
+      font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 800; color: #fff; margin-bottom: 16px;
+    }
+    .error-desc {
+      font-size: 1.05rem; color: var(--text-sec); max-width: 500px; margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+    .error-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/logo.webp" alt="Stackly Logo" class="loader-logo-img"/>
+  </div>
+
+  <!-- 404 Full Screen Error Section -->
+  <section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 60px 20px;">
+    <div class="glow-orb" style="top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; width: 600px; height: 600px;"></div>
+    
+    <div class="container" style="text-align:center; position: relative; z-index: 10;">
+      <div class="error-code" style="font-size: clamp(6rem, 15vw, 10rem); line-height: 1; text-shadow: var(--shadow-glow); margin-top: 0; margin-bottom: 20px;">404</div>
+      <h1 style="font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #fff; margin-bottom: 16px;">Coordinates Out of Range</h1>
+      <p class="error-desc" style="margin-bottom: 40px; font-size: 1.1rem; max-width: 550px; margin-left: auto; margin-right: auto;">The digital outpost coordinates you entered do not exist on our map. Let's redirect you back to active telemetry campaigns.</p>
+      
+      <div class="error-btns" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <button onclick="if(window.history.length > 1){window.history.back();}else{window.location.href='index.html';}" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left"></i> Go Back</button>
+        <a href="index.html" class="btn btn-outline btn-lg"><i class="fas fa-home"></i> Return Home</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Script -->
+  <script src="js/main.js?v=1"></script>
+</body>
+</html>
